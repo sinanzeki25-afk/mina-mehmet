@@ -554,3 +554,20 @@ async function checkUser() {
 // =========================
 
 checkUser();
+// ❤️ 1 NİSAN 2026'DAN BERİ GEÇEN SÜRE
+
+function updateLoveCounter() {
+    const startDate = new Date("2026-04-01T00:00:00");
+    const today = new Date();
+
+    const difference = today - startDate;
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+
+    const counter = document.getElementById("daysTogether");
+
+    if (counter) {
+        counter.textContent = days;
+    }
+}
+
+updateLoveCounter();
