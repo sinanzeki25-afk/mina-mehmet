@@ -1,12 +1,13 @@
-/* =========================
-   SUPABASE
-========================= */
+// =========================
+// SUPABASE AYARLARI
+// =========================
 
 const SUPABASE_URL =
     "https://jqppvpymbfqsjrnaccat.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable__ve5vd2YY7eksu4zBRPJ2g_XyM8bAzw";
+    "sb_publishable__ve5td2YY7eksu4zBRPJ2g_XyM8bAzw";
+
 
 const supabaseClient =
     window.supabase.createClient(
@@ -15,87 +16,33 @@ const supabaseClient =
     );
 
 
-/* =========================
-   LOVE COUNTER
-========================= */
+// =========================
+// HİKÂYEMİZE BAŞLA
+// =========================
 
-function updateLoveCounter() {
-
-    const startDate =
-        new Date(2026, 3, 1);
-
-    const today =
-        new Date();
-
-    startDate.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
-
-    const difference =
-        today.getTime() -
-        startDate.getTime();
-
-    const days =
-        Math.floor(
-            difference / 86400000
-        );
-
-    const counter =
-        document.getElementById(
-            "daysTogether"
-        );
-
-    if (counter) {
-
-        counter.textContent =
-            Math.max(days, 0);
-
-    }
-
-}
-
-updateLoveCounter();
-
-
-/* =========================
-   LETTER
-========================= */
-
-const letterButton =
+const startButton =
     document.getElementById(
-        "letterButton"
+        "startButton"
     );
 
-const letterContent =
-    document.getElementById(
-        "letterContent"
-    );
 
-if (
-    letterButton &&
-    letterContent
-) {
+if (startButton) {
 
-    letterButton.addEventListener(
+    startButton.addEventListener(
         "click",
         function () {
 
-            letterContent.classList.toggle(
-                "show"
-            );
+            const story =
+                document.getElementById(
+                    "story"
+                );
 
-            if (
-                letterContent.classList.contains(
-                    "show"
-                )
-            ) {
 
-                letterButton.textContent =
-                    "Mektubu Kapat";
+            if (story) {
 
-            } else {
-
-                letterButton.textContent =
-                    "Mektubu Aç ❤️";
+                story.scrollIntoView({
+                    behavior: "smooth"
+                });
 
             }
 
@@ -105,9 +52,39 @@ if (
 }
 
 
-/* =========================
-   LOGIN ELEMENTS
-========================= */
+// =========================
+// ELEMENTLER
+// =========================
+
+const noteInput =
+    document.getElementById(
+        "noteInput"
+    );
+
+const addNoteButton =
+    document.getElementById(
+        "addNote"
+    );
+
+const notesList =
+    document.getElementById(
+        "notesList"
+    );
+
+const adminLoginButton =
+    document.getElementById(
+        "adminLoginButton"
+    );
+
+const loginPanel =
+    document.getElementById(
+        "loginPanel"
+    );
+
+const editorPanel =
+    document.getElementById(
+        "editorPanel"
+    );
 
 const loginButton =
     document.getElementById(
@@ -119,203 +96,240 @@ const logoutButton =
         "logoutButton"
     );
 
-const loginArea =
+const emailInput =
     document.getElementById(
-        "loginArea"
+        "emailInput"
     );
 
-const noteForm =
+const passwordInput =
     document.getElementById(
-        "noteForm"
+        "passwordInput"
     );
 
-const addNoteButton =
+const loginMessage =
     document.getElementById(
-        "addNoteButton"
+        "loginMessage"
     );
 
-const noteInput =
+const noteMessage =
     document.getElementById(
-        "noteInput"
-    );
-
-const notesList =
-    document.getElementById(
-        "notesList"
+        "noteMessage"
     );
 
 
-/* =========================
-   CHECK USER
-========================= */
+// =========================
+// TARİH FORMATLAMA
+// =========================
 
-async function checkUser() {
+function formatDate(dateString) {
 
-    const {
-        data: {
-            user
+    const date =
+        new Date(dateString);
+
+
+    return date.toLocaleDateString(
+        "tr-TR",
+        {
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
         }
-    } =
-        await supabaseClient
-            .auth
-            .getUser();
-
-    if (user) {
-
-        showLoggedIn();
-
-    } else {
-
-        showLoggedOut();
-
-    }
+    );
 
 }
 
 
-/* =========================
-   LOGGED IN
-========================= */
+// =========================
+// HTML GÜVENLİĞİ
+// =========================
 
-function showLoggedIn() {
+function escapeHTML(text) {
 
-    if (loginArea) {
-
-        loginArea.innerHTML = `
-            <p style="
-                opacity:0.5;
-                font-size:12px;
-                margin-bottom:15px;
-            ">
-                Hoş geldin ❤️
-            </p>
-        `;
-
-    }
-
-    if (noteForm) {
-
-        noteForm.style.display =
-            "block";
-
-    }
-
-    loadNotes();
-
-}
-
-
-/* =========================
-   LOGGED OUT
-========================= */
-
-function showLoggedOut() {
-
-    if (loginArea) {
-
-        loginArea.innerHTML = `
-            <button
-                id="loginButton"
-                class="note-button">
-
-                Giriş Yap
-
-            </button>
-        `;
-
-        document
-            .getElementById("loginButton")
-            .addEventListener(
-                "click",
-                login
-            );
-
-    }
-
-    if (noteForm) {
-
-        noteForm.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================
-   LOGIN
-========================= */
-
-async function login() {
-
-    const email =
-        prompt(
-            "Supabase e-posta adresin:"
+    const div =
+        document.createElement(
+            "div"
         );
 
-    if (!email) return;
 
-    const password =
-        prompt(
-            "Şifren:"
-        );
+    div.textContent =
+        text;
 
-    if (!password) return;
+
+    return div.innerHTML;
+
+}
+
+
+// =========================
+// NOTLARI GETİR
+// =========================
+
+async function loadNotes() {
+
+    if (!notesList) {
+        return;
+    }
+
 
     const {
+        data,
         error
-    } =
-        await supabaseClient
-            .auth
-            .signInWithPassword({
-                email,
-                password
-            });
+    } = await supabaseClient
+        .from("notes")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
+
 
     if (error) {
 
-        alert(
-            "Giriş yapılamadı:\n" +
-            error.message
+        console.error(
+            "Notlar alınamadı:",
+            error
         );
+
+
+        notesList.innerHTML = `
+            <p class="notes-intro">
+                Notlar şu anda yüklenemedi.
+            </p>
+        `;
 
         return;
 
     }
 
-    checkUser();
+
+    await displayNotes(data);
 
 }
 
 
-/* =========================
-   LOGOUT
-========================= */
+// =========================
+// NOTLARI GÖSTER
+// =========================
 
-async function logout() {
+async function displayNotes(notes) {
 
-    await supabaseClient
-        .auth
-        .signOut();
-
-    showLoggedOut();
-
-}
+    if (!notesList) {
+        return;
+    }
 
 
-if (logoutButton) {
+    notesList.innerHTML = "";
 
-    logoutButton.addEventListener(
-        "click",
-        logout
+
+    if (
+        !notes ||
+        notes.length === 0
+    ) {
+
+        notesList.innerHTML = `
+            <p class="notes-intro">
+                Henüz hiç not bırakılmamış.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    const {
+        data: {
+            user
+        }
+    } = await supabaseClient.auth.getUser();
+
+
+    notes.forEach(
+        function (note) {
+
+            const noteCard =
+                document.createElement(
+                    "div"
+                );
+
+
+            noteCard.className =
+                "note-card";
+
+
+            const deleteButton =
+                user
+                    ? `
+                        <button
+                            class="delete-note"
+                            data-id="${note.id}"
+                        >
+                            Sil
+                        </button>
+                    `
+                    : "";
+
+
+            noteCard.innerHTML = `
+
+                <div class="note-date">
+                    ${formatDate(
+                        note.created_at
+                    )}
+                </div>
+
+                <div class="note-text">
+                    ${escapeHTML(
+                        note.text
+                    )}
+                </div>
+
+                ${deleteButton}
+
+            `;
+
+
+            notesList.appendChild(
+                noteCard
+            );
+
+
+            if (user) {
+
+                const button =
+                    noteCard.querySelector(
+                        ".delete-note"
+                    );
+
+
+                if (button) {
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            deleteNote(
+                                note.id
+                            );
+
+                        }
+                    );
+
+                }
+
+            }
+
+        }
     );
 
 }
 
 
-/* =========================
-   ADD NOTE
-========================= */
+// =========================
+// NOT EKLE
+// =========================
 
 if (addNoteButton) {
 
@@ -326,41 +340,112 @@ if (addNoteButton) {
             const text =
                 noteInput.value.trim();
 
-            if (!text) {
 
-                alert(
-                    "Önce bir not yaz ❤️"
-                );
+            if (text === "") {
+
+                if (noteMessage) {
+
+                    noteMessage.textContent =
+                        "Önce Mina'ya bırakmak istediğin bir şeyler yaz ❤️";
+
+                }
 
                 return;
 
             }
+
+
+            addNoteButton.disabled =
+                true;
+
+
+            if (noteMessage) {
+
+                noteMessage.textContent =
+                    "Not bırakılıyor...";
+
+            }
+
+
+            const {
+                data: {
+                    user
+                }
+            } = await supabaseClient.auth.getUser();
+
+
+            if (!user) {
+
+                if (noteMessage) {
+
+                    noteMessage.textContent =
+                        "Önce giriş yapmalısın.";
+
+                }
+
+
+                addNoteButton.disabled =
+                    false;
+
+
+                return;
+
+            }
+
 
             const {
                 error
-            } =
-                await supabaseClient
-                    .from("notes")
-                    .insert([
-                        {
-                            text: text
-                        }
-                    ]);
+            } = await supabaseClient
+                .from("notes")
+                .insert([
+                    {
+                        text: text
+                    }
+                ]);
+
 
             if (error) {
 
-                alert(
-                    "Not eklenemedi:\n" +
-                    error.message
+                console.error(
+                    "Not eklenemedi:",
+                    error
                 );
+
+
+                if (noteMessage) {
+
+                    noteMessage.textContent =
+                        "Not bırakılırken bir hata oluştu.";
+
+                }
+
+
+                addNoteButton.disabled =
+                    false;
+
 
                 return;
 
             }
 
-            noteInput.value = "";
 
-            loadNotes();
+            noteInput.value =
+                "";
+
+
+            if (noteMessage) {
+
+                noteMessage.textContent =
+                    "Notun Mina'ya bırakıldı ❤️";
+
+            }
+
+
+            await loadNotes();
+
+
+            addNoteButton.disabled =
+                false;
 
         }
     );
@@ -368,173 +453,284 @@ if (addNoteButton) {
 }
 
 
-/* =========================
-   LOAD NOTES
-========================= */
+// =========================
+// NOT SİL
+// =========================
 
-async function loadNotes() {
+async function deleteNote(id) {
 
-    if (!notesList) return;
+    const confirmed =
+        confirm(
+            "Bu notu silmek istediğine emin misin?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
 
     const {
-        data,
         error
-    } =
-        await supabaseClient
-            .from("notes")
-            .select("*")
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
+    } = await supabaseClient
+        .from("notes")
+        .delete()
+        .eq(
+            "id",
+            id
+        );
+
 
     if (error) {
 
         console.error(
-            "Notlar yüklenemedi:",
+            "Not silinemedi:",
             error
         );
+
+
+        alert(
+            "Not silinirken bir hata oluştu."
+        );
+
 
         return;
 
     }
 
-    notesList.innerHTML = "";
 
-    data.forEach(
-        function (note) {
+    await loadNotes();
 
-            const card =
-                document.createElement(
-                    "div"
+}
+
+
+// =========================
+// GİRİŞ PANELİ
+// =========================
+
+if (adminLoginButton) {
+
+    adminLoginButton.addEventListener(
+        "click",
+        function () {
+
+            if (loginPanel) {
+
+                loginPanel.classList.toggle(
+                    "hidden"
                 );
 
-            card.className =
-                "note-card";
-
-            const date =
-                new Date(
-                    note.created_at
-                );
-
-            card.innerHTML = `
-                <p>
-                    ${escapeHtml(note.text)}
-                </p>
-
-                <div class="note-date">
-                    ${date.toLocaleDateString(
-                        "tr-TR"
-                    )}
-                </div>
-
-                <button
-                    class="delete-note"
-                    data-id="${note.id}">
-
-                    Notu sil
-
-                </button>
-            `;
-
-            notesList.appendChild(
-                card
-            );
+            }
 
         }
     );
 
+}
 
-    /* DELETE BUTTONS */
 
-    document
-        .querySelectorAll(
-            ".delete-note"
-        )
-        .forEach(
-            function (button) {
+// =========================
+// GİRİŞ YAP
+// =========================
 
-                button.addEventListener(
-                    "click",
-                    function () {
+if (loginButton) {
 
-                        const id =
-                            button.dataset.id;
+    loginButton.addEventListener(
+        "click",
+        async function () {
 
-                        deleteNote(id);
+            const email =
+                emailInput.value.trim();
 
-                    }
+
+            const password =
+                passwordInput.value;
+
+
+            if (
+                !email ||
+                !password
+            ) {
+
+                if (loginMessage) {
+
+                    loginMessage.textContent =
+                        "E-posta ve şifreyi gir.";
+
+                }
+
+                return;
+
+            }
+
+
+            loginButton.disabled =
+                true;
+
+
+            if (loginMessage) {
+
+                loginMessage.textContent =
+                    "Giriş yapılıyor...";
+
+            }
+
+
+            const {
+                error
+            } = await supabaseClient.auth
+                .signInWithPassword({
+
+                    email: email,
+
+                    password: password
+
+                });
+
+
+            if (error) {
+
+                console.error(
+                    "Giriş hatası:",
+                    error
+                );
+
+
+                if (loginMessage) {
+
+                    loginMessage.textContent =
+                        "E-posta veya şifre hatalı.";
+
+                }
+
+
+                loginButton.disabled =
+                    false;
+
+
+                return;
+
+            }
+
+
+            if (loginPanel) {
+
+                loginPanel.classList.add(
+                    "hidden"
                 );
 
             }
-        );
+
+
+            if (editorPanel) {
+
+                editorPanel.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+
+            emailInput.value =
+                "";
+
+            passwordInput.value =
+                "";
+
+
+            await loadNotes();
+
+
+            loginButton.disabled =
+                false;
+
+        }
+    );
 
 }
 
 
-/* =========================
-   DELETE NOTE
-========================= */
+// =========================
+// ÇIKIŞ YAP
+// =========================
 
-async function deleteNote(id) {
+if (logoutButton) {
 
-    const confirmDelete =
-        confirm(
-            "Bu not silinsin mi?"
-        );
+    logoutButton.addEventListener(
+        "click",
+        async function () {
 
-    if (!confirmDelete) return;
+            await supabaseClient.auth.signOut();
+
+
+            if (editorPanel) {
+
+                editorPanel.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            if (loginPanel) {
+
+                loginPanel.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            await loadNotes();
+
+        }
+    );
+
+}
+
+
+// =========================
+// OTURUM KONTROLÜ
+// =========================
+
+async function checkUser() {
 
     const {
-        error
-    } =
-        await supabaseClient
-            .from("notes")
-            .delete()
-            .eq(
-                "id",
-                id
+        data: {
+            user
+        }
+    } = await supabaseClient.auth.getUser();
+
+
+    if (user) {
+
+        if (editorPanel) {
+
+            editorPanel.classList.remove(
+                "hidden"
             );
 
-    if (error) {
+        }
 
-        alert(
-            "Not silinemedi:\n" +
-            error.message
-        );
+    } else {
 
-        return;
+        if (editorPanel) {
+
+            editorPanel.classList.add(
+                "hidden"
+            );
+
+        }
 
     }
 
-    loadNotes();
+
+    await loadNotes();
 
 }
 
 
-/* =========================
-   SECURITY
-========================= */
-
-function escapeHtml(text) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.textContent =
-        text;
-
-    return div.innerHTML;
-
-}
-
-
-/* =========================
-   START
-========================= */
+// =========================
+// BAŞLAT
+// =========================
 
 checkUser();
