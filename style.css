@@ -712,3 +712,26 @@ footer span {
     }
 
 }
+/* BUGÜNÜN ŞARKISI */
+
+.music-section {
+    padding: 100px 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.music-intro {
+    margin: 20px 0 35px;
+    opacity: 0.7;
+}
+
+.spotify-player {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.spotify-player iframe {
+    display: block;
+    width: 100%;
+    border: none;
+}
