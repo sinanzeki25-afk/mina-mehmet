@@ -25,9 +25,16 @@ if (startButton) {
 
     startButton.addEventListener("click", function () {
 
-        document.getElementById("story").scrollIntoView({
-            behavior: "smooth"
-        });
+        const story =
+            document.getElementById("story");
+
+        if (story) {
+
+            story.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
 
     });
 
@@ -76,18 +83,22 @@ const noteMessage =
 
 
 // =========================
-// TARİH
+// TARİH FORMATLAMA
 // =========================
 
 function formatDate(dateString) {
 
-    const date = new Date(dateString);
+    const date =
+        new Date(dateString);
 
-    return date.toLocaleDateString("tr-TR", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric"
-    });
+    return date.toLocaleDateString(
+        "tr-TR",
+        {
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
+        }
+    );
 
 }
 
@@ -114,13 +125,19 @@ function escapeHTML(text) {
 
 async function loadNotes() {
 
-    const { data, error } =
-        await supabaseClient
-            .from("notes")
-            .select("*")
-            .order("created_at", {
-                ascending: false
-            });
+    if (!notesList) {
+        return;
+    }
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("notes")
+        .select("*")
+        .order("created_at", {
+            ascending: false
+        });
 
 
     if (error) {
@@ -151,6 +168,10 @@ async function loadNotes() {
 // =========================
 
 async function displayNotes(notes) {
+
+    if (!notesList) {
+        return;
+    }
 
     notesList.innerHTML = "";
 
@@ -212,7 +233,9 @@ async function displayNotes(notes) {
         if (user) {
 
             const button =
-                noteCard.querySelector(".delete-note");
+                noteCard.querySelector(
+                    ".delete-note"
+                );
 
 
             if (button) {
@@ -251,8 +274,12 @@ if (addNoteButton) {
 
             if (text === "") {
 
-                noteMessage.textContent =
-                    "Önce Mina'ya bırakmak istediğin bir şeyler yaz ❤️";
+                if (noteMessage) {
+
+                    noteMessage.textContent =
+                        "Önce Mina'ya bırakmak istediğin bir şeyler yaz ❤️";
+
+                }
 
                 return;
 
@@ -261,8 +288,13 @@ if (addNoteButton) {
 
             addNoteButton.disabled = true;
 
-            noteMessage.textContent =
-                "Not bırakılıyor...";
+
+            if (noteMessage) {
+
+                noteMessage.textContent =
+                    "Not bırakılıyor...";
+
+            }
 
 
             const {
@@ -274,8 +306,12 @@ if (addNoteButton) {
 
             if (!user) {
 
-                noteMessage.textContent =
-                    "Önce giriş yapmalısın.";
+                if (noteMessage) {
+
+                    noteMessage.textContent =
+                        "Önce giriş yapmalısın.";
+
+                }
 
                 addNoteButton.disabled = false;
 
@@ -302,8 +338,12 @@ if (addNoteButton) {
                     error
                 );
 
-                noteMessage.textContent =
-                    "Not bırakılırken bir hata oluştu.";
+                if (noteMessage) {
+
+                    noteMessage.textContent =
+                        "Not bırakılırken bir hata oluştu.";
+
+                }
 
                 addNoteButton.disabled = false;
 
@@ -314,8 +354,13 @@ if (addNoteButton) {
 
             noteInput.value = "";
 
-            noteMessage.textContent =
-                "Notun Mina'ya bırakıldı ❤️";
+
+            if (noteMessage) {
+
+                noteMessage.textContent =
+                    "Notun Mina'ya bırakıldı ❤️";
+
+            }
 
 
             await loadNotes();
@@ -387,9 +432,13 @@ if (adminLoginButton) {
         "click",
         function() {
 
-            loginPanel.classList.toggle(
-                "hidden"
-            );
+            if (loginPanel) {
+
+                loginPanel.classList.toggle(
+                    "hidden"
+                );
+
+            }
 
         }
     );
@@ -416,8 +465,12 @@ if (loginButton) {
 
             if (!email || !password) {
 
-                loginMessage.textContent =
-                    "E-posta ve şifreyi gir.";
+                if (loginMessage) {
+
+                    loginMessage.textContent =
+                        "E-posta ve şifreyi gir.";
+
+                }
 
                 return;
 
@@ -426,17 +479,23 @@ if (loginButton) {
 
             loginButton.disabled = true;
 
-            loginMessage.textContent =
-                "Giriş yapılıyor...";
+
+            if (loginMessage) {
+
+                loginMessage.textContent =
+                    "Giriş yapılıyor...";
+
+            }
 
 
             const {
                 data,
                 error
-            } = await supabaseClient.auth.signInWithPassword({
-                email: email,
-                password: password
-            });
+            } = await supabaseClient.auth
+                .signInWithPassword({
+                    email: email,
+                    password: password
+                });
 
 
             if (error) {
@@ -446,8 +505,12 @@ if (loginButton) {
                     error
                 );
 
-                loginMessage.textContent =
-                    "E-posta veya şifre hatalı.";
+                if (loginMessage) {
+
+                    loginMessage.textContent =
+                        "E-posta veya şifre hatalı.";
+
+                }
 
                 loginButton.disabled = false;
 
@@ -456,18 +519,30 @@ if (loginButton) {
             }
 
 
-            loginMessage.textContent =
-                "Hoş geldin Mehmet ❤️";
+            if (loginMessage) {
+
+                loginMessage.textContent =
+                    "Hoş geldin Mehmet ❤️";
+
+            }
 
 
-            loginPanel.classList.add(
-                "hidden"
-            );
+            if (loginPanel) {
+
+                loginPanel.classList.add(
+                    "hidden"
+                );
+
+            }
 
 
-            editorPanel.classList.remove(
-                "hidden"
-            );
+            if (editorPanel) {
+
+                editorPanel.classList.remove(
+                    "hidden"
+                );
+
+            }
 
 
             emailInput.value = "";
@@ -498,14 +573,23 @@ if (logoutButton) {
 
             await supabaseClient.auth.signOut();
 
-            editorPanel.classList.add(
-                "hidden"
-            );
+
+            if (editorPanel) {
+
+                editorPanel.classList.add(
+                    "hidden"
+                );
+
+            }
 
 
-            loginPanel.classList.add(
-                "hidden"
-            );
+            if (loginPanel) {
+
+                loginPanel.classList.add(
+                    "hidden"
+                );
+
+            }
 
 
             await loadNotes();
@@ -531,15 +615,23 @@ async function checkUser() {
 
     if (user) {
 
-        editorPanel.classList.remove(
-            "hidden"
-        );
+        if (editorPanel) {
+
+            editorPanel.classList.remove(
+                "hidden"
+            );
+
+        }
 
     } else {
 
-        editorPanel.classList.add(
-            "hidden"
-        );
+        if (editorPanel) {
+
+            editorPanel.classList.add(
+                "hidden"
+            );
+
+        }
 
     }
 
@@ -550,24 +642,79 @@ async function checkUser() {
 
 
 // =========================
+// ❤️ 1 NİSAN 2026'DAN BERİ
+// =========================
+
+function updateLoveCounter() {
+
+    // Başlangıç tarihi:
+    // 1 Nisan 2026
+    const startDate =
+        new Date(2026, 3, 1);
+
+    const today =
+        new Date();
+
+
+    // Saatleri sıfırla
+    // Böylece saat farkı problem olmaz.
+
+    startDate.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    // İki tarih arasındaki fark
+
+    const difference =
+        today.getTime() -
+        startDate.getTime();
+
+
+    // Gün sayısını hesapla
+
+    const days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    // HTML'deki sayaç
+
+    const counter =
+        document.getElementById(
+            "daysTogether"
+        );
+
+
+    if (counter) {
+
+        counter.textContent =
+            days;
+
+    }
+
+}
+
+
+// Sayacı çalıştır
+
+updateLoveCounter();
+
+
+// =========================
 // BAŞLAT
 // =========================
 
 checkUser();
-// ❤️ 1 NİSAN 2026'DAN BERİ GEÇEN SÜRE
-
-function updateLoveCounter() {
-    const startDate = new Date("2026-04-01T00:00:00");
-    const today = new Date();
-
-    const difference = today - startDate;
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-
-    const counter = document.getElementById("daysTogether");
-
-    if (counter) {
-        counter.textContent = days;
-    }
-}
-
-updateLoveCounter();
