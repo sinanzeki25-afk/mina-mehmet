@@ -2,10 +2,12 @@
 // SUPABASE AYARLARI
 // =========================
 
-const SUPABASE_URL = "https://jqppvpymbfqsjrnaccat.supabase.co";
+const SUPABASE_URL =
+    "https://jqppvpymbfqsjrnaccat.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable__ve5vd2YY7eksu4zBRPJ2g_XyM8bAzw";
+    "sb_publishable__ve5td2YY7eksu4zBRPJ2g_XyM8bAzw";
+
 
 const supabaseClient =
     window.supabase.createClient(
@@ -19,24 +21,33 @@ const supabaseClient =
 // =========================
 
 const startButton =
-    document.getElementById("startButton");
+    document.getElementById(
+        "startButton"
+    );
+
 
 if (startButton) {
 
-    startButton.addEventListener("click", function () {
+    startButton.addEventListener(
+        "click",
+        function () {
 
-        const story =
-            document.getElementById("story");
+            const story =
+                document.getElementById(
+                    "story"
+                );
 
-        if (story) {
 
-            story.scrollIntoView({
-                behavior: "smooth"
-            });
+            if (story) {
+
+                story.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            }
 
         }
-
-    });
+    );
 
 }
 
@@ -46,40 +57,64 @@ if (startButton) {
 // =========================
 
 const noteInput =
-    document.getElementById("noteInput");
+    document.getElementById(
+        "noteInput"
+    );
 
 const addNoteButton =
-    document.getElementById("addNote");
+    document.getElementById(
+        "addNote"
+    );
 
 const notesList =
-    document.getElementById("notesList");
+    document.getElementById(
+        "notesList"
+    );
 
 const adminLoginButton =
-    document.getElementById("adminLoginButton");
+    document.getElementById(
+        "adminLoginButton"
+    );
 
 const loginPanel =
-    document.getElementById("loginPanel");
+    document.getElementById(
+        "loginPanel"
+    );
 
 const editorPanel =
-    document.getElementById("editorPanel");
+    document.getElementById(
+        "editorPanel"
+    );
 
 const loginButton =
-    document.getElementById("loginButton");
+    document.getElementById(
+        "loginButton"
+    );
 
 const logoutButton =
-    document.getElementById("logoutButton");
+    document.getElementById(
+        "logoutButton"
+    );
 
 const emailInput =
-    document.getElementById("emailInput");
+    document.getElementById(
+        "emailInput"
+    );
 
 const passwordInput =
-    document.getElementById("passwordInput");
+    document.getElementById(
+        "passwordInput"
+    );
 
 const loginMessage =
-    document.getElementById("loginMessage");
+    document.getElementById(
+        "loginMessage"
+    );
 
 const noteMessage =
-    document.getElementById("noteMessage");
+    document.getElementById(
+        "noteMessage"
+    );
 
 
 // =========================
@@ -90,6 +125,7 @@ function formatDate(dateString) {
 
     const date =
         new Date(dateString);
+
 
     return date.toLocaleDateString(
         "tr-TR",
@@ -110,9 +146,14 @@ function formatDate(dateString) {
 function escapeHTML(text) {
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    div.textContent = text;
+
+    div.textContent =
+        text;
+
 
     return div.innerHTML;
 
@@ -129,15 +170,19 @@ async function loadNotes() {
         return;
     }
 
+
     const {
         data,
         error
     } = await supabaseClient
         .from("notes")
         .select("*")
-        .order("created_at", {
-            ascending: false
-        });
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
 
 
     if (error) {
@@ -146,6 +191,7 @@ async function loadNotes() {
             "Notlar alınamadı:",
             error
         );
+
 
         notesList.innerHTML = `
             <p class="notes-intro">
@@ -158,7 +204,7 @@ async function loadNotes() {
     }
 
 
-    displayNotes(data);
+    await displayNotes(data);
 
 }
 
@@ -173,10 +219,20 @@ async function displayNotes(notes) {
         return;
     }
 
+
     notesList.innerHTML = "";
 
 
-    if (!notes || notes.length === 0) {
+    if (
+        !notes ||
+        notes.length === 0
+    ) {
+
+        notesList.innerHTML = `
+            <p class="notes-intro">
+                Henüz hiç not bırakılmamış.
+            </p>
+        `;
 
         return;
 
@@ -190,70 +246,83 @@ async function displayNotes(notes) {
     } = await supabaseClient.auth.getUser();
 
 
-    notes.forEach(function(note) {
+    notes.forEach(
+        function (note) {
 
-        const noteCard =
-            document.createElement("div");
-
-        noteCard.className =
-            "note-card";
-
-
-        const deleteButton =
-            user
-                ? `
-                    <button
-                        class="delete-note"
-                        data-id="${note.id}"
-                    >
-                        Sil
-                    </button>
-                  `
-                : "";
-
-
-        noteCard.innerHTML = `
-
-            <div class="note-date">
-                ${formatDate(note.created_at)}
-            </div>
-
-            <div class="note-text">
-                ${escapeHTML(note.text)}
-            </div>
-
-            ${deleteButton}
-
-        `;
-
-
-        notesList.appendChild(noteCard);
-
-
-        if (user) {
-
-            const button =
-                noteCard.querySelector(
-                    ".delete-note"
+            const noteCard =
+                document.createElement(
+                    "div"
                 );
 
 
-            if (button) {
+            noteCard.className =
+                "note-card";
 
-                button.addEventListener(
-                    "click",
-                    function() {
 
-                        deleteNote(note.id);
+            const deleteButton =
+                user
+                    ? `
+                        <button
+                            class="delete-note"
+                            data-id="${note.id}"
+                        >
+                            Sil
+                        </button>
+                    `
+                    : "";
 
-                    }
-                );
+
+            noteCard.innerHTML = `
+
+                <div class="note-date">
+                    ${formatDate(
+                        note.created_at
+                    )}
+                </div>
+
+                <div class="note-text">
+                    ${escapeHTML(
+                        note.text
+                    )}
+                </div>
+
+                ${deleteButton}
+
+            `;
+
+
+            notesList.appendChild(
+                noteCard
+            );
+
+
+            if (user) {
+
+                const button =
+                    noteCard.querySelector(
+                        ".delete-note"
+                    );
+
+
+                if (button) {
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            deleteNote(
+                                note.id
+                            );
+
+                        }
+                    );
+
+                }
 
             }
 
         }
-
-    });
+    );
 
 }
 
@@ -266,7 +335,7 @@ if (addNoteButton) {
 
     addNoteButton.addEventListener(
         "click",
-        async function() {
+        async function () {
 
             const text =
                 noteInput.value.trim();
@@ -286,7 +355,8 @@ if (addNoteButton) {
             }
 
 
-            addNoteButton.disabled = true;
+            addNoteButton.disabled =
+                true;
 
 
             if (noteMessage) {
@@ -313,7 +383,10 @@ if (addNoteButton) {
 
                 }
 
-                addNoteButton.disabled = false;
+
+                addNoteButton.disabled =
+                    false;
+
 
                 return;
 
@@ -338,6 +411,7 @@ if (addNoteButton) {
                     error
                 );
 
+
                 if (noteMessage) {
 
                     noteMessage.textContent =
@@ -345,14 +419,18 @@ if (addNoteButton) {
 
                 }
 
-                addNoteButton.disabled = false;
+
+                addNoteButton.disabled =
+                    false;
+
 
                 return;
 
             }
 
 
-            noteInput.value = "";
+            noteInput.value =
+                "";
 
 
             if (noteMessage) {
@@ -366,7 +444,8 @@ if (addNoteButton) {
             await loadNotes();
 
 
-            addNoteButton.disabled = false;
+            addNoteButton.disabled =
+                false;
 
         }
     );
@@ -387,9 +466,7 @@ async function deleteNote(id) {
 
 
     if (!confirmed) {
-
         return;
-
     }
 
 
@@ -398,7 +475,10 @@ async function deleteNote(id) {
     } = await supabaseClient
         .from("notes")
         .delete()
-        .eq("id", id);
+        .eq(
+            "id",
+            id
+        );
 
 
     if (error) {
@@ -408,9 +488,11 @@ async function deleteNote(id) {
             error
         );
 
+
         alert(
             "Not silinirken bir hata oluştu."
         );
+
 
         return;
 
@@ -430,7 +512,7 @@ if (adminLoginButton) {
 
     adminLoginButton.addEventListener(
         "click",
-        function() {
+        function () {
 
             if (loginPanel) {
 
@@ -454,16 +536,20 @@ if (loginButton) {
 
     loginButton.addEventListener(
         "click",
-        async function() {
+        async function () {
 
             const email =
                 emailInput.value.trim();
+
 
             const password =
                 passwordInput.value;
 
 
-            if (!email || !password) {
+            if (
+                !email ||
+                !password
+            ) {
 
                 if (loginMessage) {
 
@@ -477,7 +563,8 @@ if (loginButton) {
             }
 
 
-            loginButton.disabled = true;
+            loginButton.disabled =
+                true;
 
 
             if (loginMessage) {
@@ -489,12 +576,14 @@ if (loginButton) {
 
 
             const {
-                data,
                 error
             } = await supabaseClient.auth
                 .signInWithPassword({
+
                     email: email,
+
                     password: password
+
                 });
 
 
@@ -505,6 +594,7 @@ if (loginButton) {
                     error
                 );
 
+
                 if (loginMessage) {
 
                     loginMessage.textContent =
@@ -512,17 +602,12 @@ if (loginButton) {
 
                 }
 
-                loginButton.disabled = false;
+
+                loginButton.disabled =
+                    false;
+
 
                 return;
-
-            }
-
-
-            if (loginMessage) {
-
-                loginMessage.textContent =
-                    "Hoş geldin Mehmet ❤️";
 
             }
 
@@ -545,15 +630,18 @@ if (loginButton) {
             }
 
 
-            emailInput.value = "";
+            emailInput.value =
+                "";
 
-            passwordInput.value = "";
+            passwordInput.value =
+                "";
 
 
             await loadNotes();
 
 
-            loginButton.disabled = false;
+            loginButton.disabled =
+                false;
 
         }
     );
@@ -569,7 +657,7 @@ if (logoutButton) {
 
     logoutButton.addEventListener(
         "click",
-        async function() {
+        async function () {
 
             await supabaseClient.auth.signOut();
 
@@ -639,78 +727,6 @@ async function checkUser() {
     await loadNotes();
 
 }
-
-
-// =========================
-// ❤️ 1 NİSAN 2026'DAN BERİ
-// =========================
-
-function updateLoveCounter() {
-
-    // Başlangıç tarihi:
-    // 1 Nisan 2026
-    const startDate =
-        new Date(2026, 3, 1);
-
-    const today =
-        new Date();
-
-
-    // Saatleri sıfırla
-    // Böylece saat farkı problem olmaz.
-
-    startDate.setHours(
-        0,
-        0,
-        0,
-        0
-    );
-
-    today.setHours(
-        0,
-        0,
-        0,
-        0
-    );
-
-
-    // İki tarih arasındaki fark
-
-    const difference =
-        today.getTime() -
-        startDate.getTime();
-
-
-    // Gün sayısını hesapla
-
-    const days =
-        Math.floor(
-            difference /
-            (1000 * 60 * 60 * 24)
-        );
-
-
-    // HTML'deki sayaç
-
-    const counter =
-        document.getElementById(
-            "daysTogether"
-        );
-
-
-    if (counter) {
-
-        counter.textContent =
-            days;
-
-    }
-
-}
-
-
-// Sayacı çalıştır
-
-updateLoveCounter();
 
 
 // =========================
