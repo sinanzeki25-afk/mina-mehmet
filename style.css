@@ -21,8 +21,6 @@ body {
 }
 
 
-/* YILDIZLAR */
-
 .stars {
     position: fixed;
     inset: 0;
@@ -51,17 +49,12 @@ body {
 
 .hero {
     min-height: 100vh;
-
     display: flex;
     flex-direction: column;
-
     justify-content: center;
     align-items: center;
-
     text-align: center;
-
     padding: 30px;
-
     position: relative;
     z-index: 1;
 }
@@ -69,83 +62,59 @@ body {
 
 .mini-title {
     font-size: 11px;
-
     letter-spacing: 5px;
-
     color: #8d8785;
-
     margin-bottom: 30px;
 }
 
 
 .hero h1 {
     font-family: "Playfair Display", serif;
-
     font-size: clamp(55px, 10vw, 130px);
-
     font-weight: 400;
-
     line-height: 1;
 }
 
 
 .hero h1 span {
     font-size: .55em;
-
     margin: 0 10px;
 }
 
 
 .date {
     margin-top: 40px;
-
     font-size: 15px;
-
     letter-spacing: 10px;
-
     color: #b5afad;
 }
 
 
 .subtitle {
     margin-top: 15px;
-
     color: #8d8785;
-
     font-family: Georgia, serif;
-
     font-style: italic;
-
     font-size: 16px;
 }
 
 
 button {
     margin-top: 45px;
-
     padding: 15px 30px;
-
     border-radius: 50px;
-
     border: 1px solid #454146;
-
     background: transparent;
-
     color: white;
-
     font-family: inherit;
-
     cursor: pointer;
-
     transition: .3s;
 }
 
 
 button:hover {
     background: white;
-
     color: black;
-
     transform: translateY(-3px);
 }
 
@@ -154,48 +123,34 @@ button:hover {
 
 .section {
     max-width: 900px;
-
     margin: auto;
-
     padding: 150px 25px;
-
     position: relative;
-
     z-index: 1;
 }
 
 
 .section-number {
     font-size: 10px;
-
     letter-spacing: 4px;
-
     color: #777174;
-
     margin-bottom: 30px;
 }
 
 
 .section h2 {
     font-family: "Playfair Display", serif;
-
     font-size: clamp(40px, 6vw, 75px);
-
     line-height: 1.1;
-
     font-weight: 400;
-
     margin-bottom: 35px;
 }
 
 
 .text {
     color: #9d9795;
-
     max-width: 620px;
-
     font-size: 17px;
-
     margin-bottom: 20px;
 }
 
@@ -209,59 +164,45 @@ button:hover {
 
 .timeline {
     margin-top: 60px;
-
     border-left: 1px solid #302d31;
-
     padding-left: 35px;
 }
 
 
 .timeline-item {
     position: relative;
-
     margin-bottom: 80px;
 }
 
 
 .timeline-dot {
     position: absolute;
-
     width: 9px;
     height: 9px;
-
     border-radius: 50%;
-
     background: white;
-
     left: -40px;
-
     top: 5px;
 }
 
 
 .timeline-content span {
     font-size: 10px;
-
     letter-spacing: 4px;
-
     color: #777174;
 }
 
 
 .timeline-content h3 {
     font-family: "Playfair Display", serif;
-
     font-size: 30px;
-
     font-weight: 400;
-
     margin: 10px 0;
 }
 
 
 .timeline-content p {
     color: #8e8887;
-
     max-width: 500px;
 }
 
@@ -270,20 +211,15 @@ button:hover {
 
 .gallery {
     display: grid;
-
     grid-template-columns: repeat(2, 1fr);
-
     gap: 15px;
-
     margin-top: 60px;
 }
 
 
 .photo-card {
     aspect-ratio: 1 / 1;
-
     overflow: hidden;
-
     border-radius: 15px;
 }
 
@@ -291,13 +227,9 @@ button:hover {
 .photo-placeholder {
     width: 100%;
     height: 100%;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     text-align: center;
 
     border: 1px solid #29272b;
@@ -310,22 +242,259 @@ button:hover {
         );
 
     color: #706a6b;
-
     transition: .5s;
 }
 
 
 .photo-placeholder:hover {
     transform: scale(1.03);
-
     border-color: #666;
 }
 
 
 .photo-placeholder span {
     font-family: "Playfair Display", serif;
-
     font-size: 20px;
+}
+
+
+/* GÜNLÜK NOTLAR */
+
+.notes-section {
+    max-width: 900px;
+    margin: auto;
+    padding: 150px 25px;
+    position: relative;
+    z-index: 1;
+}
+
+
+.notes-section h2 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(40px, 6vw, 70px);
+    line-height: 1.1;
+    font-weight: 400;
+}
+
+
+.notes-intro {
+    max-width: 600px;
+    color: #8e8887;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-top: 25px;
+}
+
+
+/* NOT KARTLARI */
+
+.note-card {
+    position: relative;
+
+    margin-top: 25px;
+    padding: 30px;
+
+    border: 1px solid #29272b;
+    border-radius: 18px;
+
+    background: #0e0e12;
+
+    animation: noteAppear .5s ease;
+}
+
+
+.note-date {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #777174;
+    margin-bottom: 18px;
+}
+
+
+.note-text {
+    color: #c1bbb9;
+
+    font-family: Georgia, serif;
+    font-size: 18px;
+
+    line-height: 1.9;
+
+    white-space: pre-wrap;
+}
+
+
+.delete-note {
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    margin: 0;
+
+    padding: 5px 10px;
+
+    border: none;
+    background: transparent;
+
+    color: #555054;
+
+    font-size: 12px;
+}
+
+
+.delete-note:hover {
+    background: transparent;
+    color: #aaa;
+    transform: none;
+}
+
+
+/* YÖNETİCİ ALANI */
+
+.admin-area {
+    margin-top: 60px;
+}
+
+
+#adminLoginButton {
+    margin-top: 0;
+    opacity: .55;
+    font-size: 12px;
+}
+
+
+#adminLoginButton:hover {
+    opacity: 1;
+}
+
+
+.login-panel,
+.note-editor {
+    margin-top: 25px;
+
+    padding: 30px;
+
+    border: 1px solid #29272b;
+    border-radius: 18px;
+
+    background: rgba(20, 19, 24, 0.7);
+}
+
+
+.admin-title {
+    color: #aaa4a2;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 22px;
+
+    margin-bottom: 20px;
+}
+
+
+.login-panel input {
+    width: 100%;
+
+    display: block;
+
+    margin-top: 15px;
+
+    padding: 15px 0;
+
+    border: none;
+    border-bottom: 1px solid #353238;
+
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 15px;
+}
+
+
+.login-panel input::placeholder {
+    color: #625d60;
+}
+
+
+.login-panel button {
+    margin-top: 25px;
+}
+
+
+#noteInput {
+    width: 100%;
+    min-height: 160px;
+
+    resize: vertical;
+
+    background: transparent;
+
+    border: none;
+
+    outline: none;
+
+    color: #f5f0eb;
+
+    font-family: Georgia, serif;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+}
+
+
+#noteInput::placeholder {
+    color: #625d60;
+}
+
+
+#addNote {
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+
+.logout-button {
+    display: block;
+
+    margin-top: 15px;
+
+    padding: 8px 15px;
+
+    font-size: 11px;
+
+    color: #777174;
+
+    border-color: #29272b;
+}
+
+
+.logout-button:hover {
+    background: transparent;
+
+    color: white;
+}
+
+
+#loginMessage,
+#noteMessage {
+    margin-top: 15px;
+
+    color: #777174;
+
+    font-size: 12px;
+}
+
+
+.hidden {
+    display: none !important;
 }
 
 
@@ -333,24 +502,17 @@ button:hover {
 
 .letter-section {
     max-width: 800px;
-
     margin: auto;
-
     padding: 150px 25px;
-
     text-align: center;
-
     position: relative;
-
     z-index: 1;
 }
 
 
 .letter-section h2 {
     font-family: "Playfair Display", serif;
-
     font-size: clamp(45px, 7vw, 80px);
-
     font-weight: 400;
 }
 
@@ -359,7 +521,6 @@ button:hover {
     margin-top: 50px;
 
     border-top: 1px solid #2b292d;
-
     border-bottom: 1px solid #2b292d;
 
     padding: 55px 20px;
@@ -368,7 +529,6 @@ button:hover {
 
 .letter p {
     max-width: 600px;
-
     margin: 0 auto 25px;
 
     color: #aaa4a2;
@@ -400,11 +560,9 @@ button:hover {
     min-height: 80vh;
 
     display: flex;
-
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
@@ -412,14 +570,12 @@ button:hover {
     padding: 50px;
 
     position: relative;
-
     z-index: 1;
 }
 
 
 .big-heart {
     font-size: 55px;
-
     margin-bottom: 30px;
 
     animation: heartbeat 1.8s infinite;
@@ -437,7 +593,6 @@ button:hover {
 
 .final-section p {
     color: #777174;
-
     margin-top: 20px;
 }
 
@@ -497,6 +652,21 @@ footer span {
 }
 
 
+@keyframes noteAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
 /* TELEFON */
 
 @media (max-width: 600px) {
@@ -523,6 +693,22 @@ footer span {
 
     .timeline-dot {
         left: -30px;
+    }
+
+
+    .notes-section {
+        padding: 100px 20px;
+    }
+
+
+    .login-panel,
+    .note-editor {
+        padding: 20px;
+    }
+
+
+    .note-card {
+        padding: 25px 20px;
     }
 
 }
