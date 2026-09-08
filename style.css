@@ -1,3 +1,7 @@
+/* =========================
+   GENEL
+========================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -9,11 +13,25 @@ html {
 }
 
 body {
-    background: #080808;
-    color: #f5f5f5;
-    font-family: "Inter", sans-serif;
-    font-weight: 300;
+    background: #0b090a;
+    color: #f5eeee;
+    font-family: "DM Sans", sans-serif;
     line-height: 1.7;
+}
+
+button,
+input,
+textarea {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+::selection {
+    background: #ffffff;
+    color: #000000;
 }
 
 
@@ -23,119 +41,236 @@ body {
 
 .hero {
     min-height: 100vh;
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     text-align: center;
-    position: relative;
+
     overflow: hidden;
+
     background:
         radial-gradient(
             circle at center,
-            rgba(255,255,255,0.07),
-            transparent 35%
-        ),
-        #080808;
+            #2a151b 0%,
+            #130d10 40%,
+            #080707 100%
+        );
 }
 
 .hero::before {
-    content: "♥";
+    content: "";
+
     position: absolute;
-    font-size: 500px;
-    opacity: 0.015;
-    font-family: serif;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    background: rgba(160, 60, 80, 0.10);
+
+    filter: blur(100px);
+
+    animation: pulse 5s infinite alternate;
+}
+
+@keyframes pulse {
+
+    from {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    to {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
+    padding: 30px;
 }
 
-.hero-date {
+.small-title {
     font-size: 12px;
-    letter-spacing: 6px;
-    opacity: 0.45;
+    letter-spacing: 5px;
+    opacity: 0.55;
     margin-bottom: 25px;
 }
 
 .hero h1 {
     font-family: "Playfair Display", serif;
-    font-size: clamp(50px, 10vw, 110px);
+
+    font-size: clamp(
+        50px,
+        9vw,
+        100px
+    );
+
     font-weight: 400;
     line-height: 1.1;
 }
 
 .hero h1 span {
-    font-size: 0.55em;
+    font-size: 0.6em;
 }
 
-.hero-subtitle {
-    margin-top: 25px;
-    opacity: 0.55;
-    font-size: 14px;
+.hero-date {
+    margin-top: 30px;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 22px;
+
+    letter-spacing: 8px;
+
+    opacity: 0.8;
 }
 
-.start-button {
-    display: inline-block;
-    margin-top: 45px;
-    padding: 14px 32px;
-    border: 1px solid rgba(255,255,255,0.15);
+.hero-description {
+    margin-top: 20px;
+    opacity: 0.6;
+    font-size: 15px;
+}
+
+.main-button {
+    margin-top: 35px;
+
+    padding: 15px 30px;
+
+    border: 1px solid rgba(255,255,255,0.25);
+
     border-radius: 50px;
+
+    background: rgba(255,255,255,0.05);
+
     color: white;
-    text-decoration: none;
-    font-size: 13px;
-    transition: 0.3s ease;
+
+    font-size: 14px;
+
+    transition: 0.3s;
 }
 
-.start-button:hover {
-    background: rgba(255,255,255,0.08);
-    transform: translateY(-3px);
+.main-button:hover {
+    background: white;
+    color: #111;
+    transform: translateY(-2px);
+}
+
+.main-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
 }
 
 
 /* =========================
-   GENERAL SECTIONS
+   SECTIONS
 ========================= */
 
 .section {
-    max-width: 1000px;
+    width: min(
+        900px,
+        calc(100% - 40px)
+    );
+
     margin: auto;
-    padding: 120px 25px;
+
+    padding: 120px 0;
 }
 
-.section-label {
-    font-size: 10px;
-    letter-spacing: 5px;
-    opacity: 0.4;
+.section-number {
+    font-size: 11px;
+    letter-spacing: 4px;
+    opacity: 0.45;
     margin-bottom: 25px;
 }
 
 .section h2 {
     font-family: "Playfair Display", serif;
-    font-size: clamp(38px, 6vw, 65px);
+
+    font-size: clamp(
+        36px,
+        6vw,
+        60px
+    );
+
     line-height: 1.2;
+
     font-weight: 400;
+
     margin-bottom: 35px;
 }
 
 .section-text {
-    max-width: 600px;
-    opacity: 0.6;
-    line-height: 2;
+    max-width: 700px;
+    font-size: 16px;
+    opacity: 0.7;
 }
 
 
 /* =========================
-   STORY
+   LOVE COUNTER
 ========================= */
 
-.story {
+.love-counter {
     text-align: center;
-    max-width: 850px;
+
+    margin: 70px auto 0;
+
+    padding: 50px 20px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.08);
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.08);
 }
 
-.story .section-text {
-    margin: auto;
+.love-counter p {
+    font-size: 13px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.6;
+
+    margin-bottom: 15px;
+}
+
+#daysTogether {
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(
+        70px,
+        12vw,
+        120px
+    );
+
+    line-height: 1;
+
+    margin: 10px 0;
+
+    min-height: 120px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.love-counter span {
+    font-size: 12px;
+
+    letter-spacing: 5px;
+
+    opacity: 0.55;
 }
 
 
@@ -144,128 +279,125 @@ body {
 ========================= */
 
 .timeline {
-    margin-top: 70px;
-    position: relative;
-}
+    margin-top: 60px;
 
-.timeline::before {
-    content: "";
-    position: absolute;
-    left: 8px;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: rgba(255,255,255,0.1);
+    border-left:
+        1px solid rgba(255,255,255,0.15);
+
+    padding-left: 35px;
 }
 
 .timeline-item {
-    padding-left: 45px;
-    margin-bottom: 70px;
     position: relative;
+    margin-bottom: 60px;
 }
 
 .timeline-item::before {
     content: "";
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.4);
-    background: #080808;
+
     position: absolute;
-    left: 0;
-    top: 3px;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    left: -40px;
+
+    top: 8px;
 }
 
 .timeline-date {
     font-size: 11px;
+
     letter-spacing: 3px;
-    opacity: 0.4;
-    margin-bottom: 15px;
+
+    opacity: 0.45;
+
+    margin-bottom: 10px;
 }
 
-.timeline-card {
-    padding: 30px;
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 18px;
-    background: rgba(255,255,255,0.02);
-    transition: 0.4s ease;
-}
-
-.timeline-card:hover {
-    transform: translateX(5px);
-    border-color: rgba(255,255,255,0.15);
-}
-
-.timeline-card span {
-    font-size: 24px;
-}
-
-.timeline-card h3 {
+.timeline-content h3 {
     font-family: "Playfair Display", serif;
-    font-size: 25px;
+
+    font-size: 27px;
+
     font-weight: 400;
-    margin: 10px 0;
+
+    margin-bottom: 8px;
 }
 
-.timeline-card p {
-    opacity: 0.55;
+.timeline-content p {
+    opacity: 0.6;
 }
 
 
 /* =========================
-   PHOTOS
+   FOTOĞRAFLAR
 ========================= */
 
-.photos-section {
-    text-align: center;
-}
-
 .photo-grid {
-    margin-top: 60px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+
+    margin-top: 50px;
 }
 
 .photo-card {
-    padding: 15px;
-    background: #111;
-    transform: rotate(-1deg);
-    transition: 0.4s ease;
-}
+    aspect-ratio: 1 / 1;
 
-.photo-card:nth-child(even) {
-    transform: rotate(1deg);
-}
+    overflow: hidden;
 
-.photo-card:hover {
-    transform: rotate(0deg) scale(1.03);
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 5px;
 }
 
 .photo-placeholder {
-    aspect-ratio: 1 / 1;
+    width: 100%;
+    height: 100%;
+
     display: flex;
+
+    flex-direction: column;
+
     align-items: center;
     justify-content: center;
+
     background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,0.06),
-            transparent
+        linear-gradient(
+            135deg,
+            #181112,
+            #0d0b0c
         );
-    border: 1px solid rgba(255,255,255,0.05);
+
+    transition: 0.4s;
+}
+
+.photo-placeholder:hover {
+    transform: scale(1.03);
 }
 
 .photo-placeholder span {
-    opacity: 0.3;
-    font-size: 13px;
+    font-size: 35px;
+    opacity: 0.35;
 }
 
-.photo-card p {
-    text-align: left;
+.photo-placeholder p {
     margin-top: 10px;
-    font-family: "Playfair Display", serif;
-    opacity: 0.7;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    opacity: 0.4;
 }
 
 
@@ -274,294 +406,339 @@ body {
 ========================= */
 
 .music-section {
-    text-align: center;
+    max-width: 800px;
 }
 
-.music-section .section-text {
-    margin: auto;
-    margin-bottom: 40px;
+.music-intro {
+    opacity: 0.65;
+    margin-bottom: 25px;
 }
 
-.spotify-card {
-    max-width: 700px;
-    margin: auto;
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-
-/* =========================
-   LOCATION
-========================= */
-
-.location-section {
-    padding: 80px 20px;
-    display: flex;
-    justify-content: center;
-}
-
-.location-card {
+.spotify-player {
     width: 100%;
-    max-width: 700px;
-    text-align: center;
-    padding: 60px 30px;
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 24px;
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(255,255,255,0.035),
-            transparent 65%
-        );
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    transition: 0.4s ease;
+    margin-top: 35px;
 }
 
-.location-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(255,255,255,0.16);
-    box-shadow: 0 25px 70px rgba(0,0,0,0.45);
-}
+.spotify-player iframe {
+    display: block;
 
-.location-icon {
-    font-size: 38px;
-    margin-bottom: 20px;
-}
+    width: 100%;
 
-.location-small {
-    font-size: 10px;
-    letter-spacing: 5px;
-    opacity: 0.45;
-    margin-bottom: 20px;
-}
+    border: none;
 
-.location-card h2 {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(30px, 5vw, 48px);
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 20px;
-}
-
-.location-text {
-    max-width: 500px;
-    margin: auto;
-    opacity: 0.6;
-    line-height: 1.9;
-}
-
-.location-name {
-    margin-top: 25px;
-    margin-bottom: 30px;
-    font-size: 12px;
-    letter-spacing: 1px;
-    opacity: 0.45;
-}
-
-.location-button {
-    display: inline-block;
-    padding: 13px 30px;
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 50px;
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    transition: 0.3s ease;
-}
-
-.location-button:hover {
-    background: rgba(255,255,255,0.08);
-    transform: scale(1.04);
+    border-radius: 12px;
 }
 
 
 /* =========================
-   COUNTER
+   NOTLAR
 ========================= */
 
-.love-counter {
-    text-align: center;
-    margin: 70px auto 0;
-    padding: 80px 20px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+.notes-list {
+    margin-top: 45px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
 }
 
-.love-counter p {
+.notes-intro {
+    opacity: 0.5;
+    font-size: 14px;
+}
+
+.note-card {
+    position: relative;
+
+    padding: 25px;
+
+    background:
+        rgba(255,255,255,0.03);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 8px;
+
+    transition: 0.3s;
+}
+
+.note-card:hover {
+    background:
+        rgba(255,255,255,0.05);
+}
+
+.note-date {
     font-size: 11px;
-    letter-spacing: 4px;
+
+    letter-spacing: 2px;
+
+    opacity: 0.4;
+
+    margin-bottom: 12px;
+}
+
+.note-text {
+    white-space: pre-wrap;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 20px;
+
+    line-height: 1.6;
+}
+
+.delete-note {
+    margin-top: 20px;
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    border:
+        1px solid rgba(255,255,255,0.15);
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 11px;
+
     opacity: 0.5;
 }
 
-#daysTogether {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(80px, 15vw, 150px);
-    line-height: 1;
-    margin: 20px 0;
-    min-height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+.delete-note:hover {
+    opacity: 1;
 
-.love-counter span {
-    font-size: 11px;
-    letter-spacing: 6px;
-    opacity: 0.45;
+    background:
+        rgba(255,255,255,0.08);
 }
 
 
 /* =========================
-   NOTES
+   EDITOR
 ========================= */
 
-.notes-section {
-    text-align: center;
-}
+.editor-panel {
+    margin-top: 40px;
 
-.note-form {
-    max-width: 650px;
-    margin: 40px auto;
+    padding: 30px;
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,0.025);
 }
 
 #noteInput {
     width: 100%;
-    min-height: 130px;
-    padding: 18px;
+
     resize: vertical;
-    background: rgba(255,255,255,0.03);
+
+    min-height: 130px;
+
+    padding: 18px;
+
+    background:
+        rgba(0,0,0,0.3);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    border-radius: 8px;
+
     color: white;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 15px;
+
     outline: none;
-    font-family: inherit;
+
+    font-size: 15px;
 }
 
 #noteInput:focus {
-    border-color: rgba(255,255,255,0.25);
+    border-color:
+        rgba(255,255,255,0.35);
 }
 
-.note-actions {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+#noteInput::placeholder {
+    color:
+        rgba(255,255,255,0.35);
+}
+
+.message {
     margin-top: 15px;
-}
 
-.note-button {
-    padding: 12px 25px;
-    border-radius: 30px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: transparent;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
+    font-size: 13px;
 
-.note-button:hover {
-    background: rgba(255,255,255,0.08);
-}
-
-.note-button.secondary {
-    opacity: 0.5;
-}
-
-.notes-list {
-    max-width: 650px;
-    margin: 30px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.note-card {
-    text-align: left;
-    padding: 22px;
-    border-radius: 15px;
-    border: 1px solid rgba(255,255,255,0.07);
-    background: rgba(255,255,255,0.025);
-}
-
-.note-card p {
-    opacity: 0.8;
-}
-
-.note-date {
-    margin-top: 10px;
-    font-size: 10px;
-    opacity: 0.35;
-}
-
-.delete-note {
-    margin-top: 10px;
-    background: none;
-    border: none;
-    color: white;
-    opacity: 0.35;
-    cursor: pointer;
-    font-size: 11px;
+    opacity: 0.6;
 }
 
 
 /* =========================
-   LETTER
+   GİRİŞ
 ========================= */
 
-.letter-section {
-    padding: 100px 20px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
+.admin-area {
+    margin-top: 35px;
 }
 
-.letter-card {
-    max-width: 700px;
-    width: 100%;
-    padding: 60px 30px;
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 25px;
-    background: rgba(255,255,255,0.02);
-}
+.secondary-button {
+    padding: 12px 22px;
 
-.letter-icon {
-    font-size: 45px;
-    margin-bottom: 20px;
-}
-
-.letter-button {
-    margin-top: 15px;
-    padding: 13px 28px;
     border-radius: 30px;
-    border: 1px solid rgba(255,255,255,0.15);
+
+    border:
+        1px solid rgba(255,255,255,0.15);
+
     background: transparent;
+
     color: white;
-    cursor: pointer;
-    transition: 0.3s ease;
+
+    font-size: 12px;
+
+    opacity: 0.6;
+
+    transition: 0.3s;
 }
 
-.letter-button:hover {
-    background: rgba(255,255,255,0.08);
+.secondary-button:hover {
+    opacity: 1;
+
+    background:
+        rgba(255,255,255,0.05);
 }
 
-.letter-content {
-    display: none;
-    text-align: left;
+.login-panel {
+    margin-top: 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    max-width: 400px;
+}
+
+.login-panel input {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border-radius: 6px;
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    background:
+        rgba(255,255,255,0.04);
+
+    color: white;
+
+    outline: none;
+}
+
+.login-panel input:focus {
+    border-color:
+        rgba(255,255,255,0.35);
+}
+
+.login-panel input::placeholder {
+    color:
+        rgba(255,255,255,0.35);
+}
+
+.login-panel .main-button {
+    margin-top: 5px;
+}
+
+.logout-button {
+    margin-top: 20px;
+
+    padding: 8px 16px;
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    background: transparent;
+
+    color: white;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    opacity: 0.45;
+}
+
+.logout-button:hover {
+    opacity: 1;
+}
+
+
+/* =========================
+   GİZLİ
+========================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================
+   MEKTUP
+========================= */
+
+.letter {
+    max-width: 700px;
+
+    padding: 50px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 5px;
+
+    margin-top: 45px;
+}
+
+.letter p {
+    margin-bottom: 25px;
+
+    opacity: 0.75;
+
+    font-size: 16px;
+}
+
+.letter-highlight {
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 27px !important;
+
+    opacity: 1 !important;
+}
+
+.letter-signature {
+    text-align: right;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 22px !important;
+
     margin-top: 40px;
-    padding: 30px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    line-height: 2;
-    opacity: 0.8;
-    animation: fadeIn 0.8s ease;
-}
-
-.letter-content.show {
-    display: block;
-}
-
-.letter-sign {
-    font-family: "Playfair Display", serif;
-    font-size: 20px;
-    margin-top: 30px;
 }
 
 
@@ -570,91 +747,162 @@ body {
 ========================= */
 
 .final-section {
-    min-height: 80vh;
+    min-height: 70vh;
+
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+
     align-items: center;
+
+    justify-content: center;
+
     text-align: center;
-    padding: 50px 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #241116,
+            #090708 70%
+        );
 }
 
-.final-section p {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(32px, 6vw, 60px);
-    line-height: 1.3;
+.final-content {
+    padding: 30px;
 }
 
-.final-section h2 {
-    margin-top: 50px;
-    font-family: "Playfair Display", serif;
-    font-size: clamp(35px, 7vw, 70px);
+.final-content > p:first-child {
+    opacity: 0.5;
+
+    letter-spacing: 3px;
+
+    font-size: 12px;
+}
+
+.final-content h2 {
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(45px, 8vw, 80px);
+
     font-weight: 400;
+
+    margin-top: 10px;
 }
 
-.final-section h2 span {
-    font-size: 0.6em;
+.final-heart {
+    font-size: 45px;
+
+    margin: 30px 0;
+
+    animation:
+        heartBeat 1.5s infinite;
+}
+
+@keyframes heartBeat {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
 }
 
 .final-date {
-    margin-top: 20px;
-    font-size: 11px;
+    font-size: 12px;
+
     letter-spacing: 4px;
-    opacity: 0.4;
+
+    opacity: 0.5;
 }
 
 
 /* =========================
-   ANIMATION
+   FOOTER
 ========================= */
 
-@keyframes fadeIn {
+footer {
+    padding: 40px 20px;
 
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
+    text-align: center;
 
-    to {
-        opacity: 0.8;
-        transform: translateY(0);
-    }
+    border-top:
+        1px solid rgba(255,255,255,0.06);
 
+    opacity: 0.45;
+
+    font-size: 12px;
+}
+
+footer p:first-child {
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 17px;
+
+    margin-bottom: 5px;
 }
 
 
 /* =========================
-   MOBILE
+   MOBİL
 ========================= */
 
 @media (max-width: 600px) {
 
     .section {
-        padding: 90px 20px;
+        width:
+            calc(100% - 30px);
+
+        padding:
+            80px 0;
+    }
+
+    .hero h1 {
+        font-size: 52px;
+    }
+
+    .hero-date {
+        font-size: 18px;
+        letter-spacing: 5px;
     }
 
     .photo-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
 
-    .timeline-card {
-        padding: 22px;
+    .timeline {
+        padding-left: 25px;
     }
 
-    .note-actions {
-        flex-direction: column;
+    .timeline-item::before {
+        left: -30px;
     }
 
-    .note-button {
-        width: 100%;
+    .letter {
+        padding: 30px 22px;
     }
 
-    .location-card {
-        padding: 45px 20px;
+    .letter-highlight {
+        font-size: 22px !important;
     }
 
-    .love-counter {
-        padding: 60px 15px;
+    #daysTogether {
+        font-size: 75px;
+        min-height: 90px;
+    }
+
+    .editor-panel {
+        padding: 20px;
     }
 
 }
