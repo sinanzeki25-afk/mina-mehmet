@@ -3,59 +3,41 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Mina ♥ Mehmet</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
-        rel="stylesheet"
-    >
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- ========================= -->
-    <!-- HERO -->
-    <!-- ========================= -->
+    <!-- =========================
+         HERO
+    ========================== -->
 
     <header class="hero">
 
-        <div class="hero-overlay"></div>
-
         <div class="hero-content">
 
-            <p class="small-title">
-                BİZİM HİKÂYEMİZ
-            </p>
+            <p class="hero-date">01.04.2026</p>
 
             <h1>
                 Mina <span>♥</span> Mehmet
             </h1>
 
-            <p class="hero-date">
-                01.04
-            </p>
-
-            <p class="hero-description">
+            <p class="hero-subtitle">
                 Her şeyin tekrardan başladığı o gün...
             </p>
 
-            <button
-                id="startButton"
-                class="main-button"
-            >
-                Hikâyemize Başla
-            </button>
+            <a href="#story" class="start-button">
+                Hikâyemize Gir
+            </a>
 
         </div>
 
@@ -64,119 +46,43 @@
 
     <main>
 
-        <!-- ========================= -->
-        <!-- HİKÂYEMİZ -->
-        <!-- ========================= -->
+        <!-- =========================
+             STORY
+        ========================== -->
 
-        <section
-            id="story"
-            class="section story-section"
-        >
+        <section id="story" class="section story">
 
-            <div class="section-number">
-                01 — HİKÂYEMİZ
-            </div>
+            <p class="section-label">
+                BİZİM HİKÂYEMİZ
+            </p>
 
             <h2>
-                Her güzel hikâyenin
-                bir başlangıcı vardır.
+                Bazı hikâyeler<br>
+                yeniden yazılır.
             </h2>
 
             <p class="section-text">
-
-                Bazen bir insanın hayatımıza ne zaman
-                girdiğini değil, hayatımızı ne zaman
-                değiştirdiğini hatırlarız.
-
-                <br><br>
-
-                Bizim hikâyemiz de tam olarak böyle.
-
-                <br><br>
-
-                1 Nisan 2026...
-
-                <br><br>
-
-                Belki sıradan bir gündü.
-                Ama bizim için her şeyin yeniden
-                başladığı gündü.
-
+                Hayat bazen insanları birbirinden uzaklaştırır,
+                bazen de doğru zamanda yeniden karşılaştırır.
+                Bizim hikâyemiz de tam olarak böyle...
             </p>
-
-
-            <!-- ========================= -->
-            <!-- GÜN SAYACI -->
-            <!-- ========================= -->
-
-            <div class="love-counter">
-
-                <p>
-                    01.04.2026'dan beri
-                </p>
-
-                <div id="daysTogether"></div>
-
-                <span>
-                    GÜN ❤️
-                </span>
-
-            </div>
-
-
-            <!-- SAYAÇ -->
-            <script>
-                (function () {
-
-                    const startDate =
-                        new Date(2026, 3, 1);
-
-                    const today =
-                        new Date();
-
-                    startDate.setHours(
-                        0, 0, 0, 0
-                    );
-
-                    today.setHours(
-                        0, 0, 0, 0
-                    );
-
-                    const days =
-                        Math.floor(
-                            (today - startDate) /
-                            86400000
-                        );
-
-                    const counter =
-                        document.getElementById(
-                            "daysTogether"
-                        );
-
-                    if (counter) {
-                        counter.innerText = days;
-                    }
-
-                })();
-            </script>
-
 
         </section>
 
 
-        <!-- ========================= -->
-        <!-- ZAMAN ÇİZELGESİ -->
-        <!-- ========================= -->
+        <!-- =========================
+             TIMELINE
+        ========================== -->
 
-        <section class="section timeline-section">
+        <section class="section">
 
-            <div class="section-number">
-                02 — ZAMAN ÇİZELGESİ
-            </div>
+            <p class="section-label">
+                ZAMAN ÇİZELGESİ
+            </p>
 
             <h2>
-                Küçük anlar,
-                büyük hatıralar.
+                Bizden kalan<br>
+                küçük anlar.
             </h2>
 
             <div class="timeline">
@@ -187,15 +93,17 @@
                         01.04.2026
                     </div>
 
-                    <div class="timeline-content">
+                    <div class="timeline-card">
+
+                        <span>❤️</span>
 
                         <h3>
-                            Her şey yeniden başladı
+                            Her şeyin yeniden başladığı gün
                         </h3>
 
                         <p>
-                            Bizim için anlamı bambaşka
-                            olan o güzel gün.
+                            Belki sıradan bir gündü...
+                            Ama bizim için değildi.
                         </p>
 
                     </div>
@@ -206,18 +114,20 @@
                 <div class="timeline-item">
 
                     <div class="timeline-date">
-                        O GÜNLER
+                        Bir gün
                     </div>
 
-                    <div class="timeline-content">
+                    <div class="timeline-card">
+
+                        <span>🌙</span>
 
                         <h3>
-                            Birlikte geçirilen zaman
+                            Güzel bir anı
                         </h3>
 
                         <p>
-                            Konuşmalar, gülüşmeler,
-                            küçük mutluluklar...
+                            Buraya birlikte yaşadığımız
+                            güzel anlardan birini yazabiliriz.
                         </p>
 
                     </div>
@@ -228,18 +138,19 @@
                 <div class="timeline-item">
 
                     <div class="timeline-date">
-                        BUGÜN
+                        Daha sonra...
                     </div>
 
-                    <div class="timeline-content">
+                    <div class="timeline-card">
+
+                        <span>∞</span>
 
                         <h3>
-                            Hikâyemiz devam ediyor
+                            Daha yazılacak çok şey var.
                         </h3>
 
                         <p>
-                            Ve daha yazılacak
-                            çok fazla güzel anımız var.
+                            Çünkü hikâyemiz henüz bitmedi.
                         </p>
 
                     </div>
@@ -251,67 +162,56 @@
         </section>
 
 
-        <!-- ========================= -->
-        <!-- ANILARIMIZ -->
-        <!-- ========================= -->
+        <!-- =========================
+             PHOTOS
+        ========================== -->
 
-        <section class="section memories-section">
+        <section class="section photos-section">
 
-            <div class="section-number">
-                03 — ANILARIMIZ
-            </div>
-
-            <h2>
-                Fotoğraflarda kalan
-                güzel anlar.
-            </h2>
-
-            <p class="section-text">
-                Buraya ilerleyen zamanlarda
-                birlikte çekildiğimiz fotoğrafları
-                ekleyebiliriz.
+            <p class="section-label">
+                BİZDEN
             </p>
 
+            <h2>
+                Bazı anlar<br>
+                fotoğraflara sığar.
+            </h2>
 
             <div class="photo-grid">
 
                 <div class="photo-card">
-
                     <div class="photo-placeholder">
-                        <span>♥</span>
-                        <p>Birinci anımız</p>
+                        <span>Fotoğrafımız</span>
                     </div>
 
+                    <p>Mina ❤️</p>
                 </div>
 
 
                 <div class="photo-card">
-
                     <div class="photo-placeholder">
-                        <span>♥</span>
-                        <p>İkinci anımız</p>
+                        <span>Fotoğrafımız</span>
                     </div>
 
+                    <p>Mehmet ❤️</p>
                 </div>
 
 
                 <div class="photo-card">
-
                     <div class="photo-placeholder">
-                        <span>♥</span>
-                        <p>Üçüncü anımız</p>
+                        <span>Fotoğrafımız</span>
                     </div>
 
+                    <p>Biz ❤️</p>
                 </div>
 
 
                 <div class="photo-card">
-
                     <div class="photo-placeholder">
-                        <span>♥</span>
-                        <p>Dördüncü anımız</p>
+                        <span>Fotoğrafımız</span>
                     </div>
 
+                    <p>Bir anımız...</p>
                 </div>
 
             </div>
@@ -319,35 +219,28 @@
         </section>
 
 
-        <!-- ========================= -->
-        <!-- BUGÜNÜN ŞARKISI -->
-        <!-- ========================= -->
+        <!-- =========================
+             SPOTIFY
+        ========================== -->
 
         <section class="section music-section">
 
-            <div class="section-number">
-                04 — BUGÜNÜN ŞARKISI
-            </div>
-
-            <h2>
-                Bugün seni anlatan
-                bir şarkı.
-            </h2>
-
-            <p class="music-intro">
-
-                Bugünün şarkısı:
-
-                <strong>
-                    Aşk Laftan Anlamaz Ki
-                </strong>
-
-                — Yıldız Tilbe
-
+            <p class="section-label">
+                BUGÜNÜN ŞARKISI
             </p>
 
+            <h2>
+                Bugün seni anlatan<br>
+                şarkı bu.
+            </h2>
 
-            <div class="spotify-player">
+            <p class="section-text">
+                Her gün başka bir şarkı seçebilirsin.
+                Çünkü bazı şarkılar insanı bir anda
+                bir anıya götürür.
+            </p>
+
+            <div class="spotify-card">
 
                 <iframe
                     src="https://open.spotify.com/embed/track/6ISpHcsG1LZMI2EyvzgW5P?utm_source=generator"
@@ -364,122 +257,192 @@
         </section>
 
 
-        <!-- ========================= -->
-        <!-- BUGÜN / NOTLAR -->
-        <!-- ========================= -->
+        <!-- =========================
+             LOCATION
+        ========================== -->
+
+        <section class="location-section">
+
+            <div class="location-card">
+
+                <div class="location-icon">
+                    📍
+                </div>
+
+                <p class="location-small">
+                    BİZİM KONUMUMUZ
+                </p>
+
+                <h2>
+                    Anılarımızın olduğu yer...
+                </h2>
+
+                <p class="location-text">
+                    Bazı yerlerin sadece bir adresi vardır.
+                    Bazı yerlerin ise bir hikâyesi...
+                </p>
+
+                <div class="location-name">
+                    25JF+9V · Çekmeköy, İstanbul
+                </div>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=25JF%2B9V%20%C3%87ekmek%C3%B6y%2C%20%C4%B0stanbul"
+                    target="_blank"
+                    class="location-button">
+
+                    Haritada Gör ❤️
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LOVE COUNTER
+        ========================== -->
+
+        <section class="love-counter">
+
+            <p>
+                01.04.2026'dan beri
+            </p>
+
+            <div id="daysTogether">
+                0
+            </div>
+
+            <span>
+                GÜN ❤️
+            </span>
+
+        </section>
+
+
+        <!-- =========================
+             NOTES
+        ========================== -->
 
         <section class="section notes-section">
 
-            <div class="section-number">
-                05 — BUGÜN
-            </div>
-
-            <h2>
-                Bugün sana
-                bırakmak istediğim...
-            </h2>
-
-            <p class="section-text">
-                Buraya birlikte oluşturduğumuz
-                küçük notları bırakabiliriz.
+            <p class="section-label">
+                BİRBİRİMİZE NOTLAR
             </p>
 
+            <h2>
+                Sana bırakılmış<br>
+                küçük şeyler.
+            </h2>
 
-            <!-- NOTLAR -->
 
-            <div
-                id="notesList"
-                class="notes-list"
-            >
+            <div id="loginArea">
 
-                <p class="notes-intro">
-                    Notlar yükleniyor...
-                </p>
+                <button
+                    id="loginButton"
+                    class="note-button">
+
+                    Giriş Yap
+
+                </button>
 
             </div>
 
 
-            <!-- NOT EKLEME -->
-
             <div
-                id="editorPanel"
-                class="editor-panel hidden"
-            >
+                id="noteForm"
+                class="note-form"
+                style="display:none;">
 
                 <textarea
                     id="noteInput"
-                    placeholder="Mina'ya bugün söylemek istediğin bir şey..."
-                    rows="5"
-                ></textarea>
+                    placeholder="Mina'ya bir şeyler yaz..."></textarea>
 
+                <div class="note-actions">
 
-                <button
-                    id="addNote"
-                    class="main-button"
-                >
-                    Notu Bırak ❤️
-                </button>
+                    <button
+                        id="addNoteButton"
+                        class="note-button">
 
+                        Not Bırak ❤️
 
-                <p
-                    id="noteMessage"
-                    class="message"
-                ></p>
+                    </button>
 
+                    <button
+                        id="logoutButton"
+                        class="note-button secondary">
 
-                <button
-                    id="logoutButton"
-                    class="logout-button"
-                >
-                    Çıkış Yap
-                </button>
+                        Çıkış
+
+                    </button>
+
+                </div>
 
             </div>
 
 
-            <!-- GİRİŞ -->
+            <div id="notesList" class="notes-list"></div>
 
-            <div class="admin-area">
+        </section>
+
+
+        <!-- =========================
+             LETTER
+        ========================== -->
+
+        <section class="letter-section">
+
+            <div class="letter-card">
+
+                <div class="letter-icon">
+                    💌
+                </div>
+
+                <p class="section-label">
+                    SANA BİR MEKTUP
+                </p>
+
+                <h2>
+                    Açmak ister misin?
+                </h2>
 
                 <button
-                    id="adminLoginButton"
-                    class="secondary-button"
-                >
-                    Not bırakmak için giriş yap
+                    id="letterButton"
+                    class="letter-button">
+
+                    Mektubu Aç ❤️
+
                 </button>
 
 
                 <div
-                    id="loginPanel"
-                    class="login-panel hidden"
-                >
+                    id="letterContent"
+                    class="letter-content">
 
-                    <input
-                        type="email"
-                        id="emailInput"
-                        placeholder="E-posta"
-                    >
+                    <p>
+                        Mina,
+                    </p>
 
+                    <p>
+                        Hayatımdaki en güzel tesadüflerden biri
+                        olduğun için çok şanslıyım.
+                    </p>
 
-                    <input
-                        type="password"
-                        id="passwordInput"
-                        placeholder="Şifre"
-                    >
+                    <p>
+                        Seninle geçirdiğim her an,
+                        dönüp tekrar yaşamak isteyeceğim
+                        bir anı oluyor.
+                    </p>
 
+                    <p>
+                        İyi ki varsın.
+                        İyi ki yeniden biz olduk.
+                    </p>
 
-                    <button
-                        id="loginButton"
-                        class="main-button"
-                    >
-                        Giriş Yap
-                    </button>
-
-
-                    <p
-                        id="loginMessage"
-                        class="message"
-                    ></p>
+                    <p class="letter-sign">
+                        Seni çok seviyorum. ❤️
+                    </p>
 
                 </div>
 
@@ -488,93 +451,23 @@
         </section>
 
 
-        <!-- ========================= -->
-        <!-- SANA -->
-        <!-- ========================= -->
-
-        <section class="section letter-section">
-
-            <div class="section-number">
-                06 — SANA
-            </div>
-
-            <h2>
-                Sana söylemek
-                istediğim şeyler.
-            </h2>
-
-
-            <div class="letter">
-
-                <p>
-                    Canım sevgilim,
-                </p>
-
-
-                <p>
-                    Her günümün şükür sebebisin.
-                    O güzel ela gözlerin benim
-                    en güzel varlığım.
-                </p>
-
-
-                <p>
-                    İyi ki hayatımdasın.
-                    İyi ki yanımdasın.
-                    Seninle geçirdiğim her an
-                    benim için çok değerli.
-                </p>
-
-
-                <p>
-                    Bazen kelimeler yetmiyor
-                    seni ne kadar sevdiğimi anlatmaya.
-
-                    <br><br>
-
-                    Ama bilmeni istediğim tek bir şey var:
-                </p>
-
-
-                <p class="letter-highlight">
-                    Hep yanımda ol.
-                    Seni çok seviyorum. ❤️
-                </p>
-
-
-                <p class="letter-signature">
-                    — Mehmet
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- ========================= -->
-        <!-- SON -->
-        <!-- ========================= -->
+        <!-- =========================
+             FINAL
+        ========================== -->
 
         <section class="final-section">
 
-            <div class="final-content">
+            <p>
+                Ve daha yazılacak<br>
+                çok hikâyemiz var...
+            </p>
 
-                <p>
-                    Ve hikâyemiz
-                </p>
+            <h2>
+                Mina <span>♥</span> Mehmet
+            </h2>
 
-                <h2>
-                    daha yeni başlıyor.
-                </h2>
-
-                <div class="final-heart">
-                    ♥
-                </div>
-
-                <p class="final-date">
-                    01.04.2026 — ∞
-                </p>
-
+            <div class="final-date">
+                01.04.2026 — ∞
             </div>
 
         </section>
@@ -582,26 +475,9 @@
     </main>
 
 
-    <!-- ========================= -->
-    <!-- FOOTER -->
-    <!-- ========================= -->
-
-    <footer>
-
-        <p>
-            Mina ♥ Mehmet
-        </p>
-
-        <p>
-            Bizim hikâyemiz.
-        </p>
-
-    </footer>
-
-
-    <!-- ========================= -->
-    <!-- SUPABASE -->
-    <!-- ========================= -->
+    <!-- =========================
+         SCRIPTS
+    ========================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
