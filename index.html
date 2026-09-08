@@ -197,10 +197,95 @@
         </section>
 
 
+        <!-- GÜNLÜK NOTLAR -->
+        <section class="notes-section" id="notes">
+
+            <p class="section-number">04 — BUGÜN</p>
+
+            <h2>
+                Mina'ya<br>
+                bırakmak istediğim birkaç söz.
+            </h2>
+
+            <p class="notes-intro">
+                Her gün söyleyemediğim ama içimde kalan birkaç kelime...
+            </p>
+
+
+            <!-- ZİYARETÇİLERİN GÖRECEĞİ NOTLAR -->
+            <div id="notesList"></div>
+
+
+            <!-- YÖNETİCİ ALANI -->
+            <div class="admin-area">
+
+                <button id="adminLoginButton">
+                    Benim Alanım
+                </button>
+
+
+                <div id="loginPanel" class="login-panel hidden">
+
+                    <p class="admin-title">
+                        Sadece Mehmet için
+                    </p>
+
+                    <input
+                        type="email"
+                        id="emailInput"
+                        placeholder="E-posta"
+                        autocomplete="email"
+                    >
+
+                    <input
+                        type="password"
+                        id="passwordInput"
+                        placeholder="Şifre"
+                        autocomplete="current-password"
+                    >
+
+                    <button id="loginButton">
+                        Giriş Yap
+                    </button>
+
+                    <p id="loginMessage"></p>
+
+                </div>
+
+
+                <!-- GİRİŞ YAPILDIĞINDA -->
+                <div id="editorPanel" class="note-editor hidden">
+
+                    <p class="admin-title">
+                        Bugünün notunu bırak ❤️
+                    </p>
+
+                    <textarea
+                        id="noteInput"
+                        placeholder="Bugün Mina'ya ne söylemek istiyorsun?"
+                    ></textarea>
+
+                    <button id="addNote">
+                        Notu Bırak ❤️
+                    </button>
+
+                    <button id="logoutButton" class="logout-button">
+                        Çıkış Yap
+                    </button>
+
+                    <p id="noteMessage"></p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
         <!-- MEKTUP -->
         <section class="letter-section">
 
-            <p class="section-number">04 — SANA</p>
+            <p class="section-number">05 — SANA</p>
 
             <h2>
                 Mina'ya...
@@ -274,6 +359,10 @@
     </footer>
 
 
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- SİTEMİZİN JAVASCRIPT DOSYASI -->
     <script src="script.js"></script>
 
 </body>
