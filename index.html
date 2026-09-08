@@ -2,7 +2,6 @@
 <html lang="tr">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -12,32 +11,18 @@
 
     <title>Mina ♥ Mehmet</title>
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
         rel="stylesheet"
     >
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
-
 
     <!-- ========================= -->
     <!-- HERO -->
@@ -77,12 +62,7 @@
     </header>
 
 
-    <!-- ========================= -->
-    <!-- ANA İÇERİK -->
-    <!-- ========================= -->
-
     <main>
-
 
         <!-- ========================= -->
         <!-- HİKÂYEMİZ -->
@@ -135,9 +115,7 @@
                     01.04.2026'dan beri
                 </p>
 
-                <div id="daysTogether">
-                    0
-                </div>
+                <div id="daysTogether"></div>
 
                 <span>
                     GÜN ❤️
@@ -146,59 +124,44 @@
             </div>
 
 
-            <!-- SADECE SAYAÇ İÇİN -->
-            <!-- script.js'e bağlı değil -->
-
+            <!-- SAYAÇ -->
             <script>
+                (function () {
 
-                const startDate =
-                    new Date(2026, 3, 1);
+                    const startDate =
+                        new Date(2026, 3, 1);
 
-                const today =
-                    new Date();
+                    const today =
+                        new Date();
 
-
-                startDate.setHours(
-                    0,
-                    0,
-                    0,
-                    0
-                );
-
-
-                today.setHours(
-                    0,
-                    0,
-                    0,
-                    0
-                );
-
-
-                const difference =
-                    today - startDate;
-
-
-                const days =
-                    Math.floor(
-                        difference /
-                        (
-                            1000 *
-                            60 *
-                            60 *
-                            24
-                        )
+                    startDate.setHours(
+                        0, 0, 0, 0
                     );
 
+                    today.setHours(
+                        0, 0, 0, 0
+                    );
 
-                document.getElementById(
-                    "daysTogether"
-                ).textContent = days;
+                    const days =
+                        Math.floor(
+                            (today - startDate) /
+                            86400000
+                        );
 
+                    const counter =
+                        document.getElementById(
+                            "daysTogether"
+                        );
+
+                    if (counter) {
+                        counter.innerText = days;
+                    }
+
+                })();
             </script>
 
 
         </section>
-
 
 
         <!-- ========================= -->
@@ -216,9 +179,7 @@
                 büyük hatıralar.
             </h2>
 
-
             <div class="timeline">
-
 
                 <div class="timeline-item">
 
@@ -240,7 +201,6 @@
                     </div>
 
                 </div>
-
 
 
                 <div class="timeline-item">
@@ -265,7 +225,6 @@
                 </div>
 
 
-
                 <div class="timeline-item">
 
                     <div class="timeline-date">
@@ -287,11 +246,9 @@
 
                 </div>
 
-
             </div>
 
         </section>
-
 
 
         <!-- ========================= -->
@@ -318,74 +275,48 @@
 
             <div class="photo-grid">
 
-
                 <div class="photo-card">
 
                     <div class="photo-placeholder">
-
                         <span>♥</span>
-
-                        <p>
-                            Birinci anımız
-                        </p>
-
+                        <p>Birinci anımız</p>
                     </div>
 
                 </div>
 
 
-
                 <div class="photo-card">
 
                     <div class="photo-placeholder">
-
                         <span>♥</span>
-
-                        <p>
-                            İkinci anımız
-                        </p>
-
+                        <p>İkinci anımız</p>
                     </div>
 
                 </div>
 
 
-
                 <div class="photo-card">
 
                     <div class="photo-placeholder">
-
                         <span>♥</span>
-
-                        <p>
-                            Üçüncü anımız
-                        </p>
-
+                        <p>Üçüncü anımız</p>
                     </div>
 
                 </div>
 
 
-
                 <div class="photo-card">
 
                     <div class="photo-placeholder">
-
                         <span>♥</span>
-
-                        <p>
-                            Dördüncü anımız
-                        </p>
-
+                        <p>Dördüncü anımız</p>
                     </div>
 
                 </div>
-
 
             </div>
 
         </section>
-
 
 
         <!-- ========================= -->
@@ -433,9 +364,8 @@
         </section>
 
 
-
         <!-- ========================= -->
-        <!-- BUGÜN -->
+        <!-- BUGÜN / NOTLAR -->
         <!-- ========================= -->
 
         <section class="section notes-section">
@@ -450,10 +380,8 @@
             </h2>
 
             <p class="section-text">
-
                 Buraya birlikte oluşturduğumuz
                 küçük notları bırakabiliriz.
-
             </p>
 
 
@@ -471,9 +399,7 @@
             </div>
 
 
-            <!-- ========================= -->
-            <!-- NOT EKLEME PANELİ -->
-            <!-- ========================= -->
+            <!-- NOT EKLEME -->
 
             <div
                 id="editorPanel"
@@ -511,9 +437,7 @@
             </div>
 
 
-            <!-- ========================= -->
             <!-- GİRİŞ -->
-            <!-- ========================= -->
 
             <div class="admin-area">
 
@@ -564,7 +488,6 @@
         </section>
 
 
-
         <!-- ========================= -->
         <!-- SANA -->
         <!-- ========================= -->
@@ -589,41 +512,33 @@
 
 
                 <p>
-
                     Her günümün şükür sebebisin.
                     O güzel ela gözlerin benim
                     en güzel varlığım.
-
                 </p>
 
 
                 <p>
-
                     İyi ki hayatımdasın.
                     İyi ki yanımdasın.
                     Seninle geçirdiğim her an
                     benim için çok değerli.
-
                 </p>
 
 
                 <p>
-
                     Bazen kelimeler yetmiyor
                     seni ne kadar sevdiğimi anlatmaya.
 
                     <br><br>
 
                     Ama bilmeni istediğim tek bir şey var:
-
                 </p>
 
 
                 <p class="letter-highlight">
-
                     Hep yanımda ol.
                     Seni çok seviyorum. ❤️
-
                 </p>
 
 
@@ -634,7 +549,6 @@
             </div>
 
         </section>
-
 
 
         <!-- ========================= -->
@@ -665,9 +579,7 @@
 
         </section>
 
-
     </main>
-
 
 
     <!-- ========================= -->
@@ -687,20 +599,13 @@
     </footer>
 
 
-
     <!-- ========================= -->
     <!-- SUPABASE -->
     <!-- ========================= -->
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
-
-
-    <!-- ANA JAVASCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="script.js"></script>
-
 
 </body>
 
