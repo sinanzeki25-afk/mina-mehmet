@@ -649,7 +649,7 @@ async function setupNotifications() {
                     );
 
                     notificationStatus.textContent =
-                        "Hata: " + error.message;
+    "HATA: " + error.name + " - " + error.message;
 
                 }
 
