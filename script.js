@@ -529,3 +529,138 @@ function escapeHtml(text) {
 ========================= */
 
 checkUser();
+/* =========================
+   WEB PUSH - İLK TEST
+========================= */
+
+const notificationButton =
+    document.getElementById(
+        "enableNotifications"
+    );
+
+const notificationStatus =
+    document.getElementById(
+        "notificationStatus"
+    );
+
+
+async function setupNotifications() {
+
+    if (!notificationButton) {
+        return;
+    }
+
+    /* Tarayıcı desteği */
+
+    if (
+        !("Notification" in window) ||
+        !("serviceWorker" in navigator) ||
+        !("PushManager" in window)
+    ) {
+
+        notificationStatus.textContent =
+            "Bu cihaz bildirim sistemini desteklemiyor.";
+
+        notificationButton.disabled = true;
+
+        return;
+
+    }
+
+
+    /* Service Worker */
+
+    try {
+
+        const registration =
+            await navigator.serviceWorker.register(
+                "./sw.js"
+            );
+
+        console.log(
+            "Service Worker hazır:",
+            registration
+        );
+
+
+        notificationStatus.textContent =
+            "Bildirimleri açmak için butona bas.";
+
+
+        notificationButton.addEventListener(
+            "click",
+            async function () {
+
+                try {
+
+                    const permission =
+                        await Notification.requestPermission();
+
+
+                    if (
+                        permission !== "granted"
+                    ) {
+
+                        notificationStatus.textContent =
+                            "Bildirim izni verilmedi.";
+
+                        return;
+
+                    }
+
+
+                    notificationStatus.textContent =
+                        "Bildirim izni verildi ❤️";
+
+
+                    notificationButton.textContent =
+                        "🔔 Bildirimler Açık";
+
+
+                    notificationButton.disabled =
+                        true;
+
+
+                    console.log(
+                        "Bildirim izni:",
+                        permission
+                    );
+
+
+                    /*
+                       Şimdilik sadece
+                       izin sistemini test ediyoruz.
+                    */
+
+                } catch (error) {
+
+                    console.error(
+                        "Bildirim hatası:",
+                        error
+                    );
+
+                    notificationStatus.textContent =
+                        "Bildirim açılırken hata oluştu.";
+
+                }
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Service Worker yüklenemedi:",
+            error
+        );
+
+        notificationStatus.textContent =
+            "Bildirim sistemi başlatılamadı.";
+
+    }
+
+}
+
+
+setupNotifications();
