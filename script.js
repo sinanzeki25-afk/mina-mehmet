@@ -530,7 +530,7 @@ function escapeHtml(text) {
 
 checkUser();
 /* =========================
-   WEB PUSH - iPHONE TEST
+   BİLDİRİMLER - iPHONE
 ========================= */
 
 const notificationButton =
@@ -542,9 +542,10 @@ const notificationStatus =
 
 async function setupNotifications() {
 
-    if (!notificationButton) {
-        return;
-    }
+    if (!notificationButton) return;
+
+
+    /* Service Worker kontrolü */
 
     if (!("serviceWorker" in navigator)) {
 
@@ -561,7 +562,7 @@ async function setupNotifications() {
             await navigator.serviceWorker.register("./sw.js");
 
         console.log(
-            "Service Worker hazır:",
+            "Service Worker:",
             registration
         );
 
@@ -570,14 +571,32 @@ async function setupNotifications() {
             "Bildirimleri açmak için butona bas.";
 
 
-        notificationButton.addEventListener(
-            "click",
+        notificationButton.onclick =
             async function () {
 
                 try {
 
+                    /* Bildirim API kontrolü */
+
+                    if (!("Notification" in window)) {
+
+                        notificationStatus.textContent =
+                            "Notification API bulunamadı.";
+
+                        return;
+                    }
+
+
+                    /* Kullanıcı butona bastığı anda izin iste */
+
                     const permission =
                         await Notification.requestPermission();
+
+
+                    console.log(
+                        "Bildirim izni:",
+                        permission
+                    );
 
 
                     if (permission !== "granted") {
@@ -589,21 +608,29 @@ async function setupNotifications() {
                     }
 
 
+                    /* PushManager */
+
                     const pushManager =
                         registration.pushManager;
+
+
+                    console.log(
+                        "PushManager:",
+                        pushManager
+                    );
 
 
                     if (!pushManager) {
 
                         notificationStatus.textContent =
-                            "Push sistemi kullanılamıyor.";
+                            "PushManager bulunamadı.";
 
                         return;
                     }
 
 
                     notificationStatus.textContent =
-                        "Bildirim izni verildi ❤️";
+                        "Bildirimler başarıyla açıldı ❤️";
 
 
                     notificationButton.textContent =
@@ -614,12 +641,6 @@ async function setupNotifications() {
                         true;
 
 
-                    console.log(
-                        "iPhone bildirim izni:",
-                        permission
-                    );
-
-
                 } catch (error) {
 
                     console.error(
@@ -628,12 +649,11 @@ async function setupNotifications() {
                     );
 
                     notificationStatus.textContent =
-                        "Bildirim açılırken hata oluştu.";
+                        "Hata: " + error.message;
 
                 }
 
-            }
-        );
+            };
 
 
     } catch (error) {
