@@ -530,18 +530,14 @@ function escapeHtml(text) {
 
 checkUser();
 /* =========================
-   WEB PUSH - İLK TEST
+   WEB PUSH - iPHONE TEST
 ========================= */
 
 const notificationButton =
-    document.getElementById(
-        "enableNotifications"
-    );
+    document.getElementById("enableNotifications");
 
 const notificationStatus =
-    document.getElementById(
-        "notificationStatus"
-    );
+    document.getElementById("notificationStatus");
 
 
 async function setupNotifications() {
@@ -550,32 +546,19 @@ async function setupNotifications() {
         return;
     }
 
-    /* Tarayıcı desteği */
-
-    if (
-        !("Notification" in window) ||
-        !("serviceWorker" in navigator) ||
-        !("PushManager" in window)
-    ) {
+    if (!("serviceWorker" in navigator)) {
 
         notificationStatus.textContent =
-            "Bu cihaz bildirim sistemini desteklemiyor.";
-
-        notificationButton.disabled = true;
+            "Service Worker desteklenmiyor.";
 
         return;
-
     }
 
-
-    /* Service Worker */
 
     try {
 
         const registration =
-            await navigator.serviceWorker.register(
-                "./sw.js"
-            );
+            await navigator.serviceWorker.register("./sw.js");
 
         console.log(
             "Service Worker hazır:",
@@ -597,15 +580,25 @@ async function setupNotifications() {
                         await Notification.requestPermission();
 
 
-                    if (
-                        permission !== "granted"
-                    ) {
+                    if (permission !== "granted") {
 
                         notificationStatus.textContent =
                             "Bildirim izni verilmedi.";
 
                         return;
+                    }
 
+
+                    const pushManager =
+                        registration.pushManager;
+
+
+                    if (!pushManager) {
+
+                        notificationStatus.textContent =
+                            "Push sistemi kullanılamıyor.";
+
+                        return;
                     }
 
 
@@ -622,15 +615,10 @@ async function setupNotifications() {
 
 
                     console.log(
-                        "Bildirim izni:",
+                        "iPhone bildirim izni:",
                         permission
                     );
 
-
-                    /*
-                       Şimdilik sadece
-                       izin sistemini test ediyoruz.
-                    */
 
                 } catch (error) {
 
@@ -651,12 +639,12 @@ async function setupNotifications() {
     } catch (error) {
 
         console.error(
-            "Service Worker yüklenemedi:",
+            "Service Worker hatası:",
             error
         );
 
         notificationStatus.textContent =
-            "Bildirim sistemi başlatılamadı.";
+            "Service Worker başlatılamadı.";
 
     }
 
