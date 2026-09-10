@@ -42,10 +42,10 @@ const dailySongs = [
     },
 
     {
-        title: "İşim Olmaz",
-        artist: "Yıldız Tilbe",
-        id: ""
-    },
+    title: "İşim Olmaz",
+    artist: "Yıldız Tilbe",
+    id: "3aNLb5wo8gxb24YZUGMfbv"
+},
 
     {
         title: "Sana Değer",
