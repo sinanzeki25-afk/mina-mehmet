@@ -281,23 +281,39 @@
 
     <!-- SAYAÇ -->
 
-    <section class="love-counter">
+  <section class="love-counter">
 
-        <p>
-            01.04.2026'dan beri
-        </p>
+    <p>
+        01.04.2026'dan beri
+    </p>
 
+    <div id="daysTogether">
+        0
+    </div>
 
-        <div id="daysTogether">
-            0
-        </div>
+    <span>
+        GÜN ❤️
+    </span>
 
+</section>
 
-        <span>
-            GÜN ❤️
-        </span>
+<script>
+(function () {
+    const startDate = new Date(2026, 3, 1);
+    const today = new Date();
 
-    </section>
+    startDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const difference = today.getTime() - startDate.getTime();
+    const days = Math.max(
+        Math.floor(difference / 86400000),
+        0
+    );
+
+    document.getElementById("daysTogether").textContent = days;
+})();
+</script>
 
 
 
