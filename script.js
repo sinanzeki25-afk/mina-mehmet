@@ -1,3 +1,148 @@
+```js
+/* =========================
+   GÜNLÜK ŞARKI LİSTESİ
+========================= */
+
+const dailySongs = [
+
+    {
+        title: "Güle Güle",
+        artist: "Kenan Doğulu",
+        id: "6zq2ip8cCibUMG6cmvQgwc"
+    },
+
+    {
+        title: "Şivesi Sensin Aşkın",
+        artist: "Yıldız Tilbe",
+        id: "5AC4F6qclq8oJp8XY5QNl6"
+    },
+
+    {
+        title: "Med Cezir",
+        artist: "Levent Yüksel",
+        id: "2wwfz934Be5gDAIZktSaUs"
+    },
+
+    {
+        title: "Kandırdım",
+        artist: "Kenan Doğulu",
+        id: "4HuYkE2g6IV8iQjkqkynBu"
+    },
+
+    {
+        title: "Aşktan Ne Haber",
+        artist: "Sezen Aksu",
+        id: "5Ftku2ydxC3nkYHlkZU5Tx"
+    },
+
+    {
+        title: "Merak Etme Sen",
+        artist: "Ferdi Tayfur",
+        id: "6FM9XeNGodJPCsrTR0CE8w"
+    },
+
+    {
+        title: "İşim Olmaz",
+        artist: "Yıldız Tilbe",
+        id: ""
+    },
+
+    {
+        title: "Sana Değer",
+        artist: "Yıldız Tilbe",
+        id: "4eMwobkGjF1KlhGrMA3lGy"
+    },
+
+    {
+        title: "Beni Hatırla",
+        artist: "Nazan Öncel",
+        id: "48Ldt3JkOLelOzhtL0wG2l"
+    },
+
+    {
+        title: "Seni Özlüyorum",
+        artist: "Gazapizm",
+        id: "3kXbPFT8z6iEbkplTrousF"
+    }
+];
+
+
+/* =========================
+   BUGÜNÜN ŞARKISINI GETİR
+========================= */
+
+function updateDailySong() {
+
+    const songTitle =
+        document.getElementById("dailySongTitle");
+
+    const songArtist =
+        document.getElementById("dailySongArtist");
+
+    const spotifyFrame =
+        document.getElementById("dailySpotify");
+
+    if (
+        !songTitle ||
+        !songArtist ||
+        !spotifyFrame
+    ) {
+        return;
+    }
+
+
+    const startDate =
+        new Date(2026, 3, 1);
+
+    const today =
+        new Date();
+
+    startDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+
+    const difference =
+        today.getTime() -
+        startDate.getTime();
+
+
+    const dayNumber =
+        Math.floor(
+            difference / 86400000
+        );
+
+
+    const songIndex =
+        ((dayNumber % dailySongs.length)
+        + dailySongs.length)
+        % dailySongs.length;
+
+
+    const song =
+        dailySongs[songIndex];
+
+
+    songTitle.textContent =
+        song.title;
+
+    songArtist.textContent =
+        song.artist;
+
+
+    if (song.id) {
+
+        spotifyFrame.src =
+            "https://open.spotify.com/embed/track/" +
+            song.id +
+            "?utm_source=generator";
+
+    }
+
+}
+
+
+updateDailySong();
+```
 /* =========================
    SUPABASE
 ========================= */
