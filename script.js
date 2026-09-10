@@ -59,11 +59,10 @@ const dailySongs = [
 
 
 /* =========================
-   BUGÜNÜN ŞARKISI
+   GÜNLÜK ŞARKI
 ========================= */
 
 function updateDailySong() {
-
     const songTitle = document.getElementById("dailySongTitle");
     const songArtist = document.getElementById("dailySongArtist");
     const spotifyFrame = document.getElementById("dailySpotify");
@@ -101,23 +100,20 @@ function updateDailySong() {
 
 
 /* =========================
-   SAYAÇ
+   GÜN SAYACI
 ========================= */
 
 function updateLoveCounter() {
-
-    const counter =
-        document.getElementById("daysTogether");
+    const counter = document.getElementById("daysTogether");
 
     if (!counter) {
         return;
     }
 
     const startDate =
-        new Date(2026, 3, 1);
+        new Date("2026-04-01T00:00:00");
 
-    const today =
-        new Date();
+    const today = new Date();
 
     startDate.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
@@ -138,7 +134,6 @@ function updateLoveCounter() {
 ========================= */
 
 function setupLetter() {
-
     const letterButton =
         document.getElementById("letterButton");
 
@@ -154,12 +149,9 @@ function setupLetter() {
         letterContent.classList.toggle("show");
 
         if (letterContent.classList.contains("show")) {
-
             letterButton.textContent =
                 "Mektubu Kapat";
-
         } else {
-
             letterButton.textContent =
                 "Mektubu Aç ❤️";
         }
@@ -180,31 +172,28 @@ const SUPABASE_KEY =
 let supabaseClient = null;
 
 
-/* =========================
-   SUPABASE BAŞLAT
-========================= */
-
 function setupSupabase() {
 
+    if (
+        !window.supabase ||
+        !window.supabase.createClient
+    ) {
+        console.error(
+            "Supabase kütüphanesi yüklenemedi."
+        );
+
+        return false;
+    }
+
     try {
-
-        if (
-            !window.supabase ||
-            !window.supabase.createClient
-        ) {
-
-            console.error(
-                "Supabase kütüphanesi yüklenemedi."
-            );
-
-            return false;
-        }
 
         supabaseClient =
             window.supabase.createClient(
                 SUPABASE_URL,
                 SUPABASE_KEY
             );
+
+        console.log("SUPABASE BAĞLANDI ❤️");
 
         return true;
 
@@ -221,94 +210,6 @@ function setupSupabase() {
 
 
 /* =========================
-   NOTLAR
-========================= */
-
-function setupNotes() {
-
-    const addNoteButton =
-        document.getElementById("addNoteButton");
-
-    const noteInput =
-        document.getElementById("noteInput");
-
-    const notesList =
-        document.getElementById("notesList");
-
-    if (!addNoteButton || !noteInput || !notesList) {
-        return;
-    }
-
-
-    /* NOT EKLE */
-
-    addNoteButton.addEventListener(
-        "click",
-        async function () {
-
-            const text =
-                noteInput.value.trim();
-
-            if (!text) {
-
-                alert(
-                    "Önce bir not yaz ❤️"
-                );
-
-                return;
-            }
-
-            if (!supabaseClient) {
-
-                alert(
-                    "Not sistemi şu anda bağlanamadı."
-                );
-
-                return;
-            }
-
-            addNoteButton.disabled = true;
-
-            const result =
-                await supabaseClient
-                    .from("notes")
-                    .insert([
-                        {
-                            text: text
-                        }
-                    ]);
-
-            addNoteButton.disabled = false;
-
-            if (result.error) {
-
-                console.error(
-                    "Not ekleme hatası:",
-                    result.error
-                );
-
-                alert(
-                    "Not eklenemedi:\n" +
-                    result.error.message
-                );
-
-                return;
-            }
-
-            noteInput.value = "";
-
-            await loadNotes();
-        }
-    );
-
-
-    /* NOTLARI GETİR */
-
-    loadNotes();
-}
-
-
-/* =========================
    NOTLARI YÜKLE
 ========================= */
 
@@ -317,7 +218,19 @@ async function loadNotes() {
     const notesList =
         document.getElementById("notesList");
 
-    if (!notesList || !supabaseClient) {
+    if (!notesList) {
+        console.error(
+            "notesList bulunamadı."
+        );
+
+        return;
+    }
+
+    if (!supabaseClient) {
+        console.error(
+            "Supabase bağlantısı yok."
+        );
+
         return;
     }
 
@@ -344,13 +257,12 @@ async function loadNotes() {
             return;
         }
 
-        const data =
-            result.data || [];
-
         notesList.innerHTML = "";
 
+        const notes =
+            result.data || [];
 
-        data.forEach(function (note) {
+        notes.forEach(function (note) {
 
             const card =
                 document.createElement("div");
@@ -372,6 +284,7 @@ async function loadNotes() {
             date.className =
                 "note-date";
 
+
             if (note.created_at) {
 
                 const noteDate =
@@ -384,33 +297,16 @@ async function loadNotes() {
             }
 
 
-            const deleteButton =
-                document.createElement("button");
-
-            deleteButton.className =
-                "delete-note";
-
-            deleteButton.textContent =
-                "Notu sil";
-
-
-            deleteButton.addEventListener(
-                "click",
-                function () {
-
-                    deleteNote(note.id);
-
-                }
-            );
-
-
             card.appendChild(text);
             card.appendChild(date);
-            card.appendChild(deleteButton);
 
             notesList.appendChild(card);
-
         });
+
+        console.log(
+            "NOTLAR YÜKLENDİ:",
+            notes.length
+        );
 
     } catch (error) {
 
@@ -423,51 +319,171 @@ async function loadNotes() {
 
 
 /* =========================
-   NOT SİL
+   NOT EKLE
 ========================= */
 
-async function deleteNote(id) {
+async function addNote() {
 
-    if (!supabaseClient) {
-        return;
-    }
+    const noteInput =
+        document.getElementById("noteInput");
 
-    const confirmed =
-        confirm(
-            "Bu not silinsin mi?"
+    const addNoteButton =
+        document.getElementById(
+            "addNoteButton"
         );
 
-    if (!confirmed) {
+
+    if (!noteInput) {
+        alert("Not kutusu bulunamadı.");
         return;
     }
+
+
+    if (!addNoteButton) {
+        alert("Not butonu bulunamadı.");
+        return;
+    }
+
+
+    const text =
+        noteInput.value.trim();
+
+
+    if (!text) {
+
+        alert(
+            "Önce bir not yaz ❤️"
+        );
+
+        return;
+    }
+
+
+    if (!supabaseClient) {
+
+        alert(
+            "Supabase bağlantısı kurulamadı."
+        );
+
+        return;
+    }
+
+
+    addNoteButton.disabled = true;
+
+    addNoteButton.textContent =
+        "Ekleniyor...";
+
 
     try {
 
         const result =
             await supabaseClient
                 .from("notes")
-                .delete()
-                .eq("id", id);
+                .insert([
+                    {
+                        text: text
+                    }
+                ]);
+
 
         if (result.error) {
 
+            console.error(
+                "NOT EKLEME HATASI:",
+                result.error
+            );
+
             alert(
-                "Not silinemedi:\n" +
+                "Not eklenemedi:\n" +
                 result.error.message
             );
 
             return;
         }
 
+
+        noteInput.value = "";
+
         await loadNotes();
+
 
     } catch (error) {
 
         console.error(
-            "Not silme hatası:",
+            "NOT HATASI:",
             error
         );
+
+        alert(
+            "Bir hata oluştu:\n" +
+            error.message
+        );
+
+
+    } finally {
+
+        addNoteButton.disabled = false;
+
+        addNoteButton.textContent =
+            "Not Bırak ❤️";
     }
+}
+
+
+/* =========================
+   NOT SİSTEMİNİ BAŞLAT
+========================= */
+
+function setupNotes() {
+
+    const addNoteButton =
+        document.getElementById(
+            "addNoteButton"
+        );
+
+    const noteInput =
+        document.getElementById(
+            "noteInput"
+        );
+
+    const notesList =
+        document.getElementById(
+            "notesList"
+        );
+
+
+    console.log(
+        "NOT ELEMANLARI:",
+        {
+            button: !!addNoteButton,
+            input: !!noteInput,
+            list: !!notesList
+        }
+    );
+
+
+    if (
+        !addNoteButton ||
+        !noteInput ||
+        !notesList
+    ) {
+
+        console.error(
+            "Not HTML elemanları eksik."
+        );
+
+        return;
+    }
+
+
+    addNoteButton.addEventListener(
+        "click",
+        addNote
+    );
+
+
+    loadNotes();
 }
 
 
@@ -487,19 +503,23 @@ async function setupNotifications() {
             "notificationStatus"
         );
 
+
     if (!notificationButton) {
         return;
     }
 
+
     if (!("serviceWorker" in navigator)) {
 
         if (notificationStatus) {
+
             notificationStatus.textContent =
                 "Service Worker desteklenmiyor.";
         }
 
         return;
     }
+
 
     try {
 
@@ -508,10 +528,13 @@ async function setupNotifications() {
                 "./sw.js"
             );
 
+
         if (notificationStatus) {
+
             notificationStatus.textContent =
                 "Bildirimleri açmak için butona bas.";
         }
+
 
         notificationButton.onclick =
             async function () {
@@ -526,10 +549,14 @@ async function setupNotifications() {
                         return;
                     }
 
+
                     const permission =
                         await Notification.requestPermission();
 
-                    if (permission !== "granted") {
+
+                    if (
+                        permission !== "granted"
+                    ) {
 
                         notificationStatus.textContent =
                             "Bildirim izni verilmedi.";
@@ -537,13 +564,6 @@ async function setupNotifications() {
                         return;
                     }
 
-                    if (!registration.pushManager) {
-
-                        notificationStatus.textContent =
-                            "PushManager bulunamadı.";
-
-                        return;
-                    }
 
                     notificationStatus.textContent =
                         "Bildirimler başarıyla açıldı ❤️";
@@ -553,6 +573,7 @@ async function setupNotifications() {
 
                     notificationButton.disabled =
                         true;
+
 
                 } catch (error) {
 
@@ -569,6 +590,7 @@ async function setupNotifications() {
                 }
             };
 
+
     } catch (error) {
 
         console.error(
@@ -580,41 +602,35 @@ async function setupNotifications() {
 
 
 /* =========================
-   SİTEYİ BAŞLAT
+   SAYFA AÇILINCA HEPSİ
 ========================= */
 
-updateDailySong();
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-updateLoveCounter();
+        console.log(
+            "SAYFA HAZIR ❤️"
+        );
 
-setupLetter();
 
-const supabaseReady = setupSupabase();
+        updateDailySong();
 
-console.log("Supabase hazır mı:", supabaseReady);
+        updateLoveCounter();
 
-if (supabaseReady) {
-    setupNotes();
-} else {
-    console.error("❌ Supabase başlatılamadı!");
-}
+        setupLetter();
 
-setupNotifications();
-```
-const counter = document.getElementById("daysTogether");
 
-if (counter) {
-    const start = new Date("2026-04-01T00:00:00");
-    const today = new Date();
+        const supabaseReady =
+            setupSupabase();
 
-    start.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
 
-    const days = Math.floor(
-        (today - start) / (1000 * 60 * 60 * 24)
-    );
+        if (supabaseReady) {
 
-    counter.textContent = Math.max(days, 0);
+            setupNotes();
+        }
 
-    console.log("SAYAÇ ÇALIŞTI:", days);
-}
+
+        setupNotifications();
+    }
+);
