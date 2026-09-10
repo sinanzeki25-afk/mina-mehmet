@@ -1,5 +1,5 @@
 console.log("SCRIPT.JS ÇALIŞIYOR ❤️");
-```javascript
+
 /* =========================
    GÜNLÜK ŞARKI LİSTESİ
 ========================= */
