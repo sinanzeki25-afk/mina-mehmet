@@ -1,3 +1,4 @@
+console.log("SCRIPT.JS ÇALIŞIYOR ❤️");
 ```javascript
 /* =========================
    GÜNLÜK ŞARKI LİSTESİ
@@ -597,4 +598,20 @@ if (supabaseReady) {
 
 setupNotifications();
 ```
-console.log("SCRIPT.JS ÇALIŞIYOR ❤️");
+const counter = document.getElementById("daysTogether");
+
+if (counter) {
+    const start = new Date("2026-04-01T00:00:00");
+    const today = new Date();
+
+    start.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const days = Math.floor(
+        (today - start) / (1000 * 60 * 60 * 24)
+    );
+
+    counter.textContent = Math.max(days, 0);
+
+    console.log("SAYAÇ ÇALIŞTI:", days);
+}
