@@ -106,27 +106,12 @@ if (
 
 
 /* =========================
-   ELEMENTS
+   NOT ELEMENTLERİ
 ========================= */
-
-const loginArea =
-    document.getElementById(
-        "loginArea"
-    );
-
-const noteForm =
-    document.getElementById(
-        "noteForm"
-    );
 
 const addNoteButton =
     document.getElementById(
         "addNoteButton"
-    );
-
-const logoutButton =
-    document.getElementById(
-        "logoutButton"
     );
 
 const noteInput =
@@ -141,174 +126,7 @@ const notesList =
 
 
 /* =========================
-   CHECK USER
-========================= */
-
-async function checkUser() {
-
-    const {
-        data: {
-            user
-        }
-    } =
-        await supabaseClient
-            .auth
-            .getUser();
-
-    if (user) {
-
-        showLoggedIn();
-
-    } else {
-
-        showLoggedOut();
-
-    }
-
-}
-
-
-/* =========================
-   LOGGED IN
-========================= */
-
-function showLoggedIn() {
-
-    if (loginArea) {
-
-        loginArea.innerHTML = `
-            <p style="
-                opacity:0.5;
-                font-size:12px;
-                margin-bottom:15px;
-            ">
-                Hoş geldin ❤️
-            </p>
-        `;
-
-    }
-
-    if (noteForm) {
-
-        noteForm.style.display =
-            "block";
-
-    }
-
-    loadNotes();
-
-}
-
-
-/* =========================
-   LOGGED OUT
-========================= */
-
-function showLoggedOut() {
-
-    if (loginArea) {
-
-        loginArea.innerHTML = `
-            <button
-                id="loginButton"
-                class="note-button">
-
-                Giriş Yap
-
-            </button>
-        `;
-
-        document
-            .getElementById("loginButton")
-            .addEventListener(
-                "click",
-                login
-            );
-
-    }
-
-    if (noteForm) {
-
-        noteForm.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================
-   LOGIN
-========================= */
-
-async function login() {
-
-    const email =
-        prompt(
-            "Supabase e-posta adresin:"
-        );
-
-    if (!email) return;
-
-    const password =
-        prompt(
-            "Şifren:"
-        );
-
-    if (!password) return;
-
-    const {
-        error
-    } =
-        await supabaseClient
-            .auth
-            .signInWithPassword({
-                email,
-                password
-            });
-
-    if (error) {
-
-        alert(
-            "Giriş yapılamadı:\n" +
-            error.message
-        );
-
-        return;
-
-    }
-
-    checkUser();
-
-}
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-async function logout() {
-
-    await supabaseClient
-        .auth
-        .signOut();
-
-    showLoggedOut();
-
-}
-
-if (logoutButton) {
-
-    logoutButton.addEventListener(
-        "click",
-        logout
-    );
-
-}
-
-
-/* =========================
-   ADD NOTE
+   NOT EKLE
 ========================= */
 
 if (addNoteButton) {
@@ -330,6 +148,8 @@ if (addNoteButton) {
 
             }
 
+            addNoteButton.disabled = true;
+
             const {
                 error
             } =
@@ -340,6 +160,8 @@ if (addNoteButton) {
                             text: text
                         }
                     ]);
+
+            addNoteButton.disabled = false;
 
             if (error) {
 
@@ -363,7 +185,7 @@ if (addNoteButton) {
 
 
 /* =========================
-   LOAD NOTES
+   NOTLARI YÜKLE
 ========================= */
 
 async function loadNotes() {
@@ -466,7 +288,7 @@ async function loadNotes() {
 
 
 /* =========================
-   DELETE NOTE
+   NOT SİL
 ========================= */
 
 async function deleteNote(id) {
@@ -525,19 +347,25 @@ function escapeHtml(text) {
 
 
 /* =========================
-   START
+   BAŞLAT
 ========================= */
 
-checkUser();
+loadNotes();
+
+
 /* =========================
    BİLDİRİMLER - iPHONE
 ========================= */
 
 const notificationButton =
-    document.getElementById("enableNotifications");
+    document.getElementById(
+        "enableNotifications"
+    );
 
 const notificationStatus =
-    document.getElementById("notificationStatus");
+    document.getElementById(
+        "notificationStatus"
+    );
 
 
 async function setupNotifications() {
@@ -545,21 +373,23 @@ async function setupNotifications() {
     if (!notificationButton) return;
 
 
-    /* Service Worker kontrolü */
-
     if (!("serviceWorker" in navigator)) {
 
         notificationStatus.textContent =
             "Service Worker desteklenmiyor.";
 
         return;
+
     }
 
 
     try {
 
         const registration =
-            await navigator.serviceWorker.register("./sw.js");
+            await navigator.serviceWorker.register(
+                "./sw.js"
+            );
+
 
         console.log(
             "Service Worker:",
@@ -576,18 +406,15 @@ async function setupNotifications() {
 
                 try {
 
-                    /* Bildirim API kontrolü */
-
                     if (!("Notification" in window)) {
 
                         notificationStatus.textContent =
                             "Notification API bulunamadı.";
 
                         return;
+
                     }
 
-
-                    /* Kullanıcı butona bastığı anda izin iste */
 
                     const permission =
                         await Notification.requestPermission();
@@ -605,10 +432,9 @@ async function setupNotifications() {
                             "Bildirim izni verilmedi.";
 
                         return;
+
                     }
 
-
-                    /* PushManager */
 
                     const pushManager =
                         registration.pushManager;
@@ -626,6 +452,7 @@ async function setupNotifications() {
                             "PushManager bulunamadı.";
 
                         return;
+
                     }
 
 
@@ -649,7 +476,10 @@ async function setupNotifications() {
                     );
 
                     notificationStatus.textContent =
-    "HATA: " + error.name + " - " + error.message;
+                        "HATA: " +
+                        error.name +
+                        " - " +
+                        error.message;
 
                 }
 
