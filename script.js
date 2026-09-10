@@ -597,3 +597,4 @@ if (supabaseReady) {
 
 setupNotifications();
 ```
+console.log("SCRIPT.JS ÇALIŞIYOR ❤️");
