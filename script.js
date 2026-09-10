@@ -589,11 +589,14 @@ updateLoveCounter();
 
 setupLetter();
 
-const supabaseReady =
-    setupSupabase();
+const supabaseReady = setupSupabase();
+
+console.log("Supabase hazır mı:", supabaseReady);
 
 if (supabaseReady) {
     setupNotes();
+} else {
+    console.error("❌ Supabase başlatılamadı!");
 }
 
 setupNotifications();
