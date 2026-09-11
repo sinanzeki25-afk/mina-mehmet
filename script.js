@@ -1,12 +1,19 @@
-```javascript
-console.log("SCRIPT.JS ÇALIŞIYOR ❤️");
+// =====================================================
+// MINA ♥ MEHMET
+// Ana JavaScript Dosyası
+// =====================================================
 
-/* ==================================================
-   GÜNLÜK ŞARKI LİSTESİ
-================================================== */
+
+// =====================================================
+// GÜNLÜK ŞARKILAR
+// =====================================================
 
 const dailySongs = [
-    
+    {
+        title: "Güle Güle",
+        artist: "Kenan Doğulu",
+        id: "6zq2ip8cCibUMG6cmvQgwc"
+    },
     {
         title: "Şivesi Sensin Aşkın",
         artist: "Yıldız Tilbe",
@@ -55,86 +62,56 @@ const dailySongs = [
 ];
 
 
-/* ==================================================
-   GÜNLÜK ŞARKI
-================================================== */
+// Şarkı listesinin başladığı tarih
+const songStartDate = new Date(2026, 8, 10);
+
+
+// =====================================================
+// BUGÜNÜN ŞARKISI
+// =====================================================
 
 function updateDailySong() {
 
-    const songTitle =
-        document.getElementById("dailySongTitle");
+    const titleElement = document.getElementById("songTitle");
+    const artistElement = document.getElementById("songArtist");
+    const player = document.getElementById("spotifyPlayer");
 
-    const songArtist =
-        document.getElementById("dailySongArtist");
-
-    const spotifyFrame =
-        document.getElementById("dailySpotify");
-
-    if (
-        !songTitle ||
-        !songArtist ||
-        !spotifyFrame
-    ) {
+    if (!titleElement || !artistElement || !player) {
         return;
     }
 
-    const songStartDate =
-        new Date(2026, 8, 10);
+    const today = new Date();
 
-    const today =
-        new Date();
-
-    songStartDate.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
 
+    const start = new Date(songStartDate);
+
+    start.setHours(0, 0, 0, 0);
+
     const difference =
-        today.getTime() -
-        songStartDate.getTime();
+        Math.floor((today - start) / 86400000);
 
-    const dayNumber =
-        Math.floor(
-            difference / 86400000
-        );
+    const index =
+        ((difference % dailySongs.length) + dailySongs.length)
+        % dailySongs.length;
 
-    const songIndex =
-        (
-            dayNumber %
-            dailySongs.length +
-            dailySongs.length
-        ) %
-        dailySongs.length;
+    const song = dailySongs[index];
 
-    const song =
-        dailySongs[songIndex];
+    titleElement.textContent = song.title;
+    artistElement.textContent = song.artist;
 
-    songTitle.textContent =
-        song.title;
-
-    songArtist.textContent =
-        song.artist;
-
-    spotifyFrame.src =
-        "https://open.spotify.com/embed/track/" +
-        song.id +
-        "?utm_source=generator";
-
-    console.log(
-        "BUGÜNÜN ŞARKISI:",
-        song.title,
-        "-",
-        song.artist
-    );
+    player.src =
+        `https://open.spotify.com/embed/track/${song.id}?utm_source=generator`;
 }
 
 
-/* ==================================================
-   GÜN SAYACI
-================================================== */
+// =====================================================
+// BİRLİKTE GEÇEN GÜN SAYISI
+// =====================================================
 
 function updateLoveCounter() {
 
-    const counter =
-        document.getElementById("daysTogether");
+    const counter = document.getElementById("daysTogether");
 
     if (!counter) {
         return;
@@ -150,68 +127,46 @@ function updateLoveCounter() {
     today.setHours(0, 0, 0, 0);
 
     const difference =
-        today.getTime() -
-        startDate.getTime();
-
-    const days =
         Math.floor(
-            difference / 86400000
+            (today - startDate) / 86400000
         );
 
     counter.textContent =
-        Math.max(days, 0);
+        Math.max(0, difference);
 }
 
 
-/* ==================================================
-   MEKTUP
-================================================== */
+// =====================================================
+// HİKÂYEMİZE BAŞLA BUTONU
+// =====================================================
 
-function setupLetter() {
+function setupStartButton() {
 
-    const letterButton =
-        document.getElementById("letterButton");
+    const button =
+        document.getElementById("startButton");
 
-    const letterContent =
-        document.getElementById("letterContent");
-
-    if (
-        !letterButton ||
-        !letterContent
-    ) {
+    if (!button) {
         return;
     }
 
-    letterButton.addEventListener(
-        "click",
-        function () {
+    button.addEventListener("click", () => {
 
-            letterContent.classList.toggle(
-                "show"
-            );
+        const story =
+            document.getElementById("story");
 
-            if (
-                letterContent.classList.contains(
-                    "show"
-                )
-            ) {
-
-                letterButton.textContent =
-                    "Mektubu Kapat";
-
-            } else {
-
-                letterButton.textContent =
-                    "Mektubu Aç ❤️";
-            }
+        if (story) {
+            story.scrollIntoView({
+                behavior: "smooth"
+            });
         }
-    );
+
+    });
 }
 
 
-/* ==================================================
-   SUPABASE
-================================================== */
+// =====================================================
+// SUPABASE
+// =====================================================
 
 const SUPABASE_URL =
     "https://jqppvpymbfqsjrnaccat.supabase.co";
@@ -219,18 +174,21 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable__ve5vd2YY7eksu4zBRPJ2g_XyM8bAzw";
 
-const NOTES_API =
-    SUPABASE_URL + "/rest/v1/notes";
+const NOTES_URL =
+    `${SUPABASE_URL}/rest/v1/notes`;
 
 
-/* ==================================================
-   NOTLARI GETİR
-================================================== */
+// =====================================================
+// NOTLARI GETİR
+// =====================================================
 
 async function loadNotes() {
 
     const notesList =
         document.getElementById("notesList");
+
+    const status =
+        document.getElementById("noteStatus");
 
     if (!notesList) {
         return;
@@ -238,20 +196,21 @@ async function loadNotes() {
 
     try {
 
+        if (status) {
+            status.textContent =
+                "Notlar yükleniyor...";
+        }
+
         const response =
             await fetch(
-                NOTES_API +
-                "?select=*&order=created_at.desc",
+                `${NOTES_URL}?select=id,text,created_at&order=created_at.desc`,
                 {
                     method: "GET",
 
                     headers: {
-                        "apikey":
-                            SUPABASE_KEY,
-
+                        "apikey": SUPABASE_KEY,
                         "Authorization":
-                            "Bearer " +
-                            SUPABASE_KEY
+                            `Bearer ${SUPABASE_KEY}`
                     }
                 }
             );
@@ -262,14 +221,13 @@ async function loadNotes() {
                 await response.text();
 
             console.error(
-                "NOTLAR GETİRİLEMEDİ:",
+                "Notlar alınamadı:",
                 errorText
             );
 
-            notesList.innerHTML =
-                "<p>Notlar yüklenemedi.</p>";
-
-            return;
+            throw new Error(
+                "Notlar yüklenemedi."
+            );
         }
 
         const notes =
@@ -277,444 +235,90 @@ async function loadNotes() {
 
         notesList.innerHTML = "";
 
-        if (notes.length === 0) {
+        if (!notes.length) {
 
-            notesList.innerHTML =
-                "<p>Henüz hiç not yok. İlk notu sen bırak ❤️</p>";
+            notesList.innerHTML = `
+                <div class="note">
+                    <div class="note-text">
+                        Henüz bir not yok. İlk notu sen bırak ❤️
+                    </div>
+                </div>
+            `;
+
+            if (status) {
+                status.textContent = "";
+            }
 
             return;
         }
 
-        notes.forEach(function (note) {
+        notes.forEach(note => {
 
-            const noteCard =
+            const noteElement =
                 document.createElement("div");
 
-            noteCard.className =
-                "note-card";
+            noteElement.className =
+                "note";
 
             const date =
                 new Date(note.created_at);
 
-            const formattedDate =
-                date.toLocaleDateString(
-                    "tr-TR"
-                ) +
-                " " +
-                date.toLocaleTimeString(
-                    "tr-TR",
-                    {
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    }
-                );
+            noteElement.innerHTML = `
+                <div class="note-text"></div>
 
-            noteCard.innerHTML = `
-                <div class="note-text">
-                    ${escapeHtml(note.text)}
-                </div>
+                <div class="note-bottom">
 
-                <div class="note-footer">
-
-                    <span class="note-date">
-                        ${formattedDate}
-                    </span>
+                    <div class="note-date">
+                        ${formatDate(date)}
+                    </div>
 
                     <button
-                        class="delete-note-button"
-                        onclick="deleteNote(${note.id})">
-                        Notu Sil
+                        class="delete-note"
+                        type="button">
+                        Sil
                     </button>
 
                 </div>
             `;
 
-            notesList.appendChild(
-                noteCard
-            );
-        });
+            const textElement =
+                noteElement.querySelector(".note-text");
 
-    } catch (error) {
-
-        console.error(
-            "NOTLAR HATASI:",
-            error
-        );
-
-        notesList.innerHTML =
-            "<p>Notlar yüklenirken hata oluştu.</p>";
-    }
-}
-
-
-/* ==================================================
-   NOT EKLE
-================================================== */
-
-async function addNote() {
-
-    const noteInput =
-        document.getElementById("noteInput");
-
-    const addNoteButton =
-        document.getElementById(
-            "addNoteButton"
-        );
-
-    if (
-        !noteInput ||
-        !addNoteButton
-    ) {
-        return;
-    }
-
-    const text =
-        noteInput.value.trim();
-
-    if (!text) {
-
-        alert(
-            "Önce bir not yaz ❤️"
-        );
-
-        return;
-    }
-
-    addNoteButton.disabled =
-        true;
-
-    addNoteButton.textContent =
-        "Ekleniyor...";
-
-    try {
-
-        const response =
-            await fetch(
-                NOTES_API,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json",
-
-                        "apikey":
-                            SUPABASE_KEY,
-
-                        "Authorization":
-                            "Bearer " +
-                            SUPABASE_KEY,
-
-                        "Prefer":
-                            "return=minimal"
-                    },
-
-                    body: JSON.stringify({
-                        text: text
-                    })
-                }
-            );
-
-        if (!response.ok) {
-
-            const errorText =
-                await response.text();
-
-            console.error(
-                "NOT EKLENEMEDİ:",
-                errorText
-            );
-
-            alert(
-                "Not eklenemedi.\n\n" +
-                errorText
-            );
-
-            return;
-        }
-
-        noteInput.value = "";
-
-        await loadNotes();
-
-    } catch (error) {
-
-        console.error(
-            "NOT EKLEME HATASI:",
-            error
-        );
-
-        alert(
-            "Not eklenirken bağlantı hatası oluştu."
-        );
-
-    } finally {
-
-        addNoteButton.disabled =
-            false;
-
-        addNoteButton.textContent =
-            "Not Bırak ❤️";
-    }
-}
-
-
-/* ==================================================
-   NOT SİL
-================================================== */
-
-async function deleteNote(id) {
-
-    const confirmed =
-        confirm(
-            "Bu notu silmek istediğine emin misin?"
-        );
-
-    if (!confirmed) {
-        return;
-    }
-
-    try {
-
-        const response =
-            await fetch(
-                NOTES_API +
-                "?id=eq." +
-                id,
-                {
-                    method: "DELETE",
-
-                    headers: {
-                        "apikey":
-                            SUPABASE_KEY,
-
-                        "Authorization":
-                            "Bearer " +
-                            SUPABASE_KEY,
-
-                        "Prefer":
-                            "return=minimal"
-                    }
-                }
-            );
-
-        if (!response.ok) {
-
-            const errorText =
-                await response.text();
-
-            console.error(
-                "NOT SİLİNEMEDİ:",
-                errorText
-            );
-
-            alert(
-                "Not silinemedi.\n\n" +
-                errorText
-            );
-
-            return;
-        }
-
-        await loadNotes();
-
-    } catch (error) {
-
-        console.error(
-            "NOT SİLME HATASI:",
-            error
-        );
-
-        alert(
-            "Not silinirken bağlantı hatası oluştu."
-        );
-    }
-}
-
-
-/* ==================================================
-   GÜVENLİ METİN
-================================================== */
-
-function escapeHtml(text) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        text;
-
-    return div.innerHTML;
-}
-
-
-/* ==================================================
-   NOT SİSTEMİ
-   HERKES YAZABİLİR / OKUYABİLİR / SİLEBİLİR
-================================================== */
-
-const NOTES_URL =
-    "https://jqppvpymbfqsjrnaccat.supabase.co/rest/v1/notes";
-
-const NOTES_KEY =
-    "sb_publishable__ve5vd2YY7eksu4zBRPJ2g_XyM8bAzw";
-
-
-/* =========================
-   NOTLARI GETİR
-========================= */
-
-async function loadNotes() {
-
-    const notesList =
-        document.getElementById("notesList");
-
-    if (!notesList) return;
-
-    try {
-
-        const response =
-            await fetch(
-                NOTES_URL +
-                "?select=id,text,created_at&order=created_at.desc",
-                {
-                    method: "GET",
-
-                    headers: {
-                        "apikey": NOTES_KEY,
-                        "Authorization":
-                            "Bearer " + NOTES_KEY
-                    }
-                }
-            );
-
-        if (!response.ok) {
-
-            const error =
-                await response.text();
-
-            console.error(
-                "NOTLAR YÜKLENEMEDİ:",
-                error
-            );
-
-            notesList.innerHTML =
-                "<p>Notlar yüklenemedi.</p>";
-
-            return;
-        }
-
-        const notes =
-            await response.json();
-
-        notesList.innerHTML = "";
-
-        if (notes.length === 0) {
-
-            notesList.innerHTML =
-                "<p>Henüz not yok ❤️</p>";
-
-            return;
-        }
-
-        notes.forEach(function(note) {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "note-card";
-
-            const date =
-                new Date(note.created_at);
-
-            const dateText =
-                date.toLocaleDateString(
-                    "tr-TR"
-                ) +
-                " " +
-                date.toLocaleTimeString(
-                    "tr-TR",
-                    {
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    }
-                );
-
-            const text =
-                document.createElement("div");
-
-            text.className =
-                "note-text";
-
-            text.textContent =
+            textElement.textContent =
                 note.text;
 
-            const footer =
-                document.createElement("div");
-
-            footer.className =
-                "note-footer";
-
-            const dateElement =
-                document.createElement("span");
-
-            dateElement.className =
-                "note-date";
-
-            dateElement.textContent =
-                dateText;
-
             const deleteButton =
-                document.createElement("button");
-
-            deleteButton.className =
-                "delete-note-button";
-
-            deleteButton.textContent =
-                "Notu Sil";
+                noteElement.querySelector(".delete-note");
 
             deleteButton.addEventListener(
                 "click",
-                function() {
-
-                    deleteNote(note.id);
-
-                }
+                () => deleteNote(note.id)
             );
 
-            footer.appendChild(
-                dateElement
+            notesList.appendChild(
+                noteElement
             );
-
-            footer.appendChild(
-                deleteButton
-            );
-
-            card.appendChild(text);
-
-            card.appendChild(footer);
-
-            notesList.appendChild(card);
-
         });
+
+        if (status) {
+            status.textContent = "";
+        }
 
     } catch (error) {
 
-        console.error(
-            "NOT SİSTEMİ HATASI:",
-            error
-        );
+        console.error(error);
 
-        notesList.innerHTML =
-            "<p>Bağlantı hatası oluştu.</p>";
+        if (status) {
+            status.textContent =
+                "Notlar yüklenirken bir hata oluştu.";
+        }
     }
 }
 
 
-/* =========================
-   NOT EKLE
-========================= */
+// =====================================================
+// NOT EKLE
+// =====================================================
 
 async function addNote() {
 
@@ -722,30 +326,39 @@ async function addNote() {
         document.getElementById("noteInput");
 
     const button =
-        document.getElementById(
-            "addNoteButton"
-        );
+        document.getElementById("addNoteButton");
 
-    if (!input || !button) return;
+    const status =
+        document.getElementById("noteStatus");
+
+    if (!input) {
+        return;
+    }
 
     const text =
         input.value.trim();
 
     if (!text) {
 
-        alert(
-            "Önce bir şeyler yaz ❤️"
-        );
+        if (status) {
+            status.textContent =
+                "Önce bir şeyler yaz ❤️";
+        }
 
         return;
     }
 
-    button.disabled = true;
-
-    button.textContent =
-        "Ekleniyor...";
-
     try {
+
+        if (button) {
+            button.disabled = true;
+            button.textContent =
+                "Ekleniyor...";
+        }
+
+        if (status) {
+            status.textContent = "";
+        }
 
         const response =
             await fetch(
@@ -758,11 +371,10 @@ async function addNote() {
                             "application/json",
 
                         "apikey":
-                            NOTES_KEY,
+                            SUPABASE_KEY,
 
                         "Authorization":
-                            "Bearer " +
-                            NOTES_KEY,
+                            `Bearer ${SUPABASE_KEY}`,
 
                         "Prefer":
                             "return=minimal"
@@ -776,20 +388,17 @@ async function addNote() {
 
         if (!response.ok) {
 
-            const error =
+            const errorText =
                 await response.text();
 
             console.error(
-                "NOT EKLENEMEDİ:",
-                error
+                "Not ekleme hatası:",
+                errorText
             );
 
-            alert(
-                "Not eklenemedi:\n" +
-                error
+            throw new Error(
+                errorText
             );
-
-            return;
         }
 
         input.value = "";
@@ -798,55 +407,61 @@ async function addNote() {
 
     } catch (error) {
 
-        console.error(
-            "NOT EKLEME HATASI:",
-            error
-        );
+        console.error(error);
 
-        alert(
-            "Bağlantı hatası oluştu."
-        );
+        if (status) {
+            status.textContent =
+                "Not eklenemedi. Lütfen tekrar dene.";
+        }
 
     } finally {
 
-        button.disabled = false;
-
-        button.textContent =
-            "Not Bırak ❤️";
+        if (button) {
+            button.disabled = false;
+            button.textContent =
+                "Not Bırak ❤️";
+        }
     }
 }
 
 
-/* =========================
-   NOT SİL
-========================= */
+// =====================================================
+// NOT SİL
+// =====================================================
 
 async function deleteNote(id) {
 
-    const answer =
+    const status =
+        document.getElementById("noteStatus");
+
+    const confirmed =
         confirm(
-            "Bu notu silmek istediğine emin misin?"
+            "Bu not silinsin mi?"
         );
 
-    if (!answer) return;
+    if (!confirmed) {
+        return;
+    }
 
     try {
 
+        if (status) {
+            status.textContent =
+                "Not siliniyor...";
+        }
+
         const response =
             await fetch(
-                NOTES_URL +
-                "?id=eq." +
-                encodeURIComponent(id),
+                `${NOTES_URL}?id=eq.${encodeURIComponent(id)}`,
                 {
                     method: "DELETE",
 
                     headers: {
                         "apikey":
-                            NOTES_KEY,
+                            SUPABASE_KEY,
 
                         "Authorization":
-                            "Bearer " +
-                            NOTES_KEY,
+                            `Bearer ${SUPABASE_KEY}`,
 
                         "Prefer":
                             "return=minimal"
@@ -856,50 +471,64 @@ async function deleteNote(id) {
 
         if (!response.ok) {
 
-            const error =
+            const errorText =
                 await response.text();
 
             console.error(
-                "NOT SİLİNEMEDİ:",
-                error
+                "Not silme hatası:",
+                errorText
             );
 
-            alert(
-                "Not silinemedi:\n" +
-                error
+            throw new Error(
+                errorText
             );
-
-            return;
         }
 
         await loadNotes();
 
     } catch (error) {
 
-        console.error(
-            "NOT SİLME HATASI:",
-            error
-        );
+        console.error(error);
 
-        alert(
-            "Bağlantı hatası oluştu."
-        );
+        if (status) {
+            status.textContent =
+                "Not silinemedi.";
+        }
     }
 }
 
 
-/* =========================
-   BAŞLAT
-========================= */
+// =====================================================
+// TARİH FORMATLA
+// =====================================================
+
+function formatDate(date) {
+
+    return date.toLocaleString(
+        "tr-TR",
+        {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+}
+
+
+// =====================================================
+// NOT SİSTEMİNİ BAŞLAT
+// =====================================================
 
 function setupNotes() {
 
     const button =
-        document.getElementById(
-            "addNoteButton"
-        );
+        document.getElementById("addNoteButton");
 
-    if (!button) return;
+    if (!button) {
+        return;
+    }
 
     button.addEventListener(
         "click",
@@ -910,220 +539,21 @@ function setupNotes() {
 }
 
 
-/* ==================================================
-   PUSH BİLDİRİMLERİ
-================================================== */
+// =====================================================
+// SAYFA BAŞLANGICI
+// =====================================================
 
-const VAPID_PUBLIC_KEY = "";
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
+        updateDailySong();
 
-function urlBase64ToUint8Array(
-    base64String
-) {
+        updateLoveCounter();
 
-    const padding =
-        "=".repeat(
-            (4 -
-                base64String.length % 4
-            ) % 4
-        );
+        setupStartButton();
 
-    const base64 =
-        (
-            base64String +
-            padding
-        )
-        .replace(/-/g, "+")
-        .replace(/_/g, "/");
+        setupNotes();
 
-    const rawData =
-        window.atob(base64);
-
-    const outputArray =
-        new Uint8Array(
-            rawData.length
-        );
-
-    for (
-        let i = 0;
-        i < rawData.length;
-        ++i
-    ) {
-
-        outputArray[i] =
-            rawData.charCodeAt(i);
     }
-
-    return outputArray;
-}
-
-
-async function setupPushNotifications() {
-
-    const button =
-        document.getElementById(
-            "enableNotifications"
-        );
-
-    const status =
-        document.getElementById(
-            "notificationStatus"
-        );
-
-    if (!button) {
-        return;
-    }
-
-    if (
-        !("serviceWorker" in navigator)
-    ) {
-        return;
-    }
-
-    if (
-        !("PushManager" in window)
-    ) {
-        return;
-    }
-
-    if (
-        !("Notification" in window)
-    ) {
-        return;
-    }
-
-    if (!VAPID_PUBLIC_KEY) {
-
-        if (status) {
-
-            status.textContent =
-                "Bildirim sistemi kuruluyor...";
-        }
-
-        return;
-    }
-
-    try {
-
-        const registration =
-            await navigator.serviceWorker.register(
-                "./sw.js"
-            );
-
-        button.onclick =
-            async function () {
-
-                try {
-
-                    button.disabled =
-                        true;
-
-                    button.textContent =
-                        "Hazırlanıyor...";
-
-                    const permission =
-                        await Notification.requestPermission();
-
-                    if (
-                        permission !== "granted"
-                    ) {
-
-                        if (status) {
-
-                            status.textContent =
-                                "Bildirim izni verilmedi.";
-                        }
-
-                        button.disabled =
-                            false;
-
-                        button.textContent =
-                            "🔔 Bildirimleri Aç";
-
-                        return;
-                    }
-
-                    let subscription =
-                        await registration
-                            .pushManager
-                            .getSubscription();
-
-                    if (!subscription) {
-
-                        subscription =
-                            await registration
-                                .pushManager
-                                .subscribe({
-                                    userVisibleOnly:
-                                        true,
-
-                                    applicationServerKey:
-                                        urlBase64ToUint8Array(
-                                            VAPID_PUBLIC_KEY
-                                        )
-                                });
-                    }
-
-                    const subscriptionJSON =
-                        subscription.toJSON();
-
-                    console.log(
-                        "PUSH ABONELİĞİ:",
-                        subscriptionJSON
-                    );
-
-                    if (status) {
-
-                        status.textContent =
-                            "Bildirimler başarıyla açıldı ❤️";
-                    }
-
-                    button.textContent =
-                        "🔔 Bildirimler Açık";
-
-                } catch (error) {
-
-                    console.error(
-                        "PUSH HATASI:",
-                        error
-                    );
-
-                    if (status) {
-
-                        status.textContent =
-                            "HATA: " +
-                            error.message;
-                    }
-
-                    button.disabled =
-                        false;
-
-                    button.textContent =
-                        "🔔 Bildirimleri Aç";
-                }
-            };
-
-    } catch (error) {
-
-        console.error(
-            "Service Worker hatası:",
-            error
-        );
-    }
-}
-
-
-/* ==================================================
-   SİTEYİ BAŞLAT
-================================================== */
-
-updateDailySong();
-
-updateLoveCounter();
-
-setupLetter();
-
-setupNotes();
-
-setupPushNotifications();
-```
+);
