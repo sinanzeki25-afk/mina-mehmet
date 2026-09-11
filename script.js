@@ -7,9 +7,9 @@ console.log("SCRIPT.JS ÇALIŞIYOR ❤️");
 
 const dailySongs = [
     {
-        title: "Güle Güle",
-        artist: "Kenan Doğulu",
-        id: "6zq2ip8cCibUMG6cmvQgwc"
+        title: "Aşk Laftan Anlamazki",
+        artist: "Yıldız Tilbe",
+        id: "6ISpHcsG1LZMI2EyvzgW5P"
     },
     {
         title: "Şivesi Sensin Aşkın",
@@ -57,7 +57,6 @@ const dailySongs = [
         id: "3kXbPFT8z6iEbkplTrousF"
     }
 ];
-
 
 /* ==================================================
    GÜNLÜK ŞARKI
