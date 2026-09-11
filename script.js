@@ -78,7 +78,7 @@ function updateDailySong() {
     }
 
     const songStartDate =
-        new Date(2026, 8, 10);
+    new Date(2026, 8, 11);
 
     const today =
         new Date();
