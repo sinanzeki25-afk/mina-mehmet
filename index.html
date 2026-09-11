@@ -1,476 +1,847 @@
+```html
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Mina ♥ Mehmet</title>
 
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet"
+    >
 
-        body {
-            background: #08080b;
-            color: #f5f0eb;
-            font-family: "DM Sans", sans-serif;
-            overflow-x: hidden;
-        }
 
-        .stars {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -1;
-            background-image:
-                radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 1px),
-                radial-gradient(circle, rgba(255,255,255,.35) 1px, transparent 1px);
-            background-size: 90px 90px, 140px 140px;
-            background-position: 0 0, 40px 60px;
-            opacity: .3;
-        }
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-        section {
-            padding: 90px 20px;
-            max-width: 1000px;
-            margin: auto;
-        }
 
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex-direction: column;
-        }
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
 
-        .hero-small {
-            font-size: 13px;
-            letter-spacing: 4px;
-            opacity: .65;
-            margin-bottom: 25px;
-        }
-
-        h1 {
-            font-family: "Playfair Display", serif;
-            font-size: clamp(55px, 13vw, 120px);
-            font-weight: 400;
-            line-height: .95;
-        }
-
-        .heart {
-            color: #d9a7a7;
-        }
-
-        .hero-text {
-            max-width: 600px;
-            margin: 35px auto;
-            color: #bcb6b1;
-            line-height: 1.8;
-        }
-
-        button {
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .start-button {
-            background: #f5f0eb;
-            color: #08080b;
-            padding: 15px 25px;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: .25s;
-        }
-
-        .start-button:hover {
-            transform: translateY(-3px);
-        }
-
-        .section-number {
-            color: #d9a7a7;
-            font-size: 12px;
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-        }
-
-        h2 {
-            font-family: "Playfair Display", serif;
-            font-size: clamp(35px, 7vw, 65px);
-            font-weight: 400;
-            margin-bottom: 30px;
-        }
-
-        .story-text {
-            color: #bbb5b0;
-            line-height: 2;
-            font-size: 16px;
-        }
-
-        .timeline {
-            border-left: 1px solid #343238;
-            padding-left: 25px;
-        }
-
-        .timeline-item {
-            margin-bottom: 35px;
-        }
-
-        .timeline-date {
-            color: #d9a7a7;
-            font-size: 13px;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-        }
-
-        .timeline-title {
-            font-family: "Playfair Display", serif;
-            font-size: 25px;
-            margin-bottom: 8px;
-        }
-
-        .timeline-text {
-            color: #aaa5a0;
-            line-height: 1.7;
-        }
-
-        .music-box {
-            background: #111116;
-            border: 1px solid #29282e;
-            border-radius: 20px;
-            padding: 25px;
-        }
-
-        .song-title {
-            font-family: "Playfair Display", serif;
-            font-size: 28px;
-            margin-bottom: 5px;
-        }
-
-        .song-artist {
-            color: #aaa5a0;
-            margin-bottom: 20px;
-        }
-
-        iframe {
-            border-radius: 12px;
-            width: 100%;
-            border: none;
-        }
-
-        .counter-box {
-            text-align: center;
-            padding: 45px 20px;
-            border: 1px solid #29282e;
-            border-radius: 20px;
-            background: #0d0d11;
-        }
-
-        .counter-number {
-            font-family: "Playfair Display", serif;
-            font-size: clamp(50px, 10vw, 90px);
-        }
-
-        .counter-label {
-            color: #aaa5a0;
-            margin-top: 10px;
-        }
-
-        .notes-box {
-            background: #111116;
-            border: 1px solid #29282e;
-            border-radius: 20px;
-            padding: 25px;
-        }
-
-        #noteInput {
-            width: 100%;
-            min-height: 130px;
-            resize: vertical;
-            padding: 16px;
-            border-radius: 12px;
-            border: 1px solid #343238;
-            background: #09090c;
-            color: #fff;
-            font-family: inherit;
-            font-size: 15px;
-            outline: none;
-        }
-
-        #noteInput:focus {
-            border-color: #d9a7a7;
-        }
-
-        .note-button {
-            margin-top: 12px;
-            background: #f5f0eb;
-            color: #08080b;
-            padding: 13px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-        }
-
-        .notes-list {
-            margin-top: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .note {
-            background: #0b0b0f;
-            border: 1px solid #29282e;
-            border-radius: 14px;
-            padding: 17px;
-        }
-
-        .note-text {
-            line-height: 1.7;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .note-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .note-date {
-            font-size: 12px;
-            color: #77736f;
-        }
-
-        .delete-note {
-            background: transparent;
-            color: #b88d8d;
-            font-size: 12px;
-            padding: 5px;
-        }
-
-        .letter {
-            font-family: "Playfair Display", serif;
-            font-size: 20px;
-            line-height: 2;
-            color: #d8d1cb;
-        }
-
-        .signature {
-            margin-top: 30px;
-            color: #d9a7a7;
-        }
-
-        footer {
-            text-align: center;
-            padding: 70px 20px;
-            color: #625e5a;
-            font-size: 13px;
-        }
-
-        .status {
-            margin-top: 12px;
-            font-size: 13px;
-            color: #999;
-        }
-
-        @media (max-width: 600px) {
-            section {
-                padding: 70px 18px;
-            }
-
-            .music-box,
-            .notes-box {
-                padding: 18px;
-            }
-
-            .letter {
-                font-size: 18px;
-            }
-        }
-    </style>
 </head>
+
 
 <body>
 
-<div class="stars"></div>
 
-<section class="hero">
-    <div class="hero-small">BİZİM HİKÂYEMİZ</div>
+<header class="hero">
 
-    <h1>
-        Mina <span class="heart">♥</span> Mehmet
-    </h1>
+    <div class="hero-content">
 
-    <p class="hero-text">
-        Her şeyin tekrardan başladığı o gün...
-        <br>
-        01.04.2026
-    </p>
+        <p class="hero-date">
+            01.04.2026
+        </p>
 
-    <button class="start-button" id="startButton">
-        Hikâyemize Başla ↓
-    </button>
-</section>
 
-<section id="story">
-    <div class="section-number">01</div>
-    <h2>HİKÂYEMİZ</h2>
+        <h1>
+            Mina <span>♥</span> Mehmet
+        </h1>
 
-    <p class="story-text">
-        Bazı insanlar hayatımıza tesadüfen girer,
-        bazıları ise hayatımızın en güzel hikâyesine dönüşür.
-        <br><br>
-        Bizim hikâyemiz de yeniden başladığı o günden beri
-        her geçen gün biraz daha güzelleşiyor.
-    </p>
-</section>
 
-<section id="timeline">
-    <div class="section-number">02</div>
-    <h2>ZAMAN ÇİZELGESİ</h2>
+        <p class="hero-subtitle">
+            Her şeyin tekrardan başladığı o gün...
+        </p>
 
-    <div class="timeline">
 
-        <div class="timeline-item">
-            <div class="timeline-date">01.04.2026</div>
-            <div class="timeline-title">Her şeyin tekrardan başladığı gün</div>
-            <div class="timeline-text">
-                Hikâyemizin yeniden başladığı o güzel gün.
-            </div>
-        </div>
-
-        <div class="timeline-item">
-            <div class="timeline-date">BUGÜN</div>
-            <div class="timeline-title">Hâlâ birlikte</div>
-            <div class="timeline-text">
-                Ve hikâyemiz her gün yeni bir anıyla devam ediyor.
-            </div>
-        </div>
+        <a
+            href="#story"
+            class="start-button"
+        >
+            Hikâyemize Gir
+        </a>
 
     </div>
-</section>
 
-<section id="music">
-    <div class="section-number">03</div>
-    <h2>BUGÜNÜN ŞARKISI</h2>
+</header>
 
-    <div class="music-box">
 
-        <div class="song-title" id="songTitle">
-            Güle Güle
+
+<main>
+
+
+    <!-- HİKÂYEMİZ -->
+
+    <section
+        id="story"
+        class="section story"
+    >
+
+        <p class="section-label">
+            BİZİM HİKÂYEMİZ
+        </p>
+
+
+        <h2>
+            Her şeyin tekrardan<br>
+            başladığı o gün...
+        </h2>
+
+
+        <p class="section-text">
+
+            Bazı insanlar hayatımıza tesadüfen girer,
+            bazıları ise kalbimizde kalmak için gelir.
+            Bizim hikâyemiz de yeniden başladığı
+            o günle bambaşka bir anlam kazandı.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- ZAMAN ÇİZELGESİ -->
+
+    <section class="section">
+
+        <p class="section-label">
+            ZAMAN ÇİZELGESİ
+        </p>
+
+
+        <h2>
+            Bizim<br>
+            hikâyemiz.
+        </h2>
+
+
+        <div class="timeline">
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-date">
+                    01.04.2026
+                </div>
+
+
+                <div class="timeline-card">
+
+                    <span>
+                        ❤️
+                    </span>
+
+
+                    <h3>
+                        Her şeyin yeniden başladığı gün
+                    </h3>
+
+
+                    <p>
+                        Bütün hikâyemizin yeniden yazılmaya
+                        başladığı o güzel gün.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-date">
+                    Sonra...
+                </div>
+
+
+                <div class="timeline-card">
+
+                    <span>
+                        🌙
+                    </span>
+
+
+                    <h3>
+                        Birlikte geçen güzel anlar
+                    </h3>
+
+
+                    <p>
+                        Her geçen gün biraz daha fazla
+                        birbirimize ait olduğumuz zamanlar.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-date">
+                    Gelecek
+                </div>
+
+
+                <div class="timeline-card">
+
+                    <span>
+                        ∞
+                    </span>
+
+
+                    <h3>
+                        Daha yazılacak çok şey var.
+                    </h3>
+
+
+                    <p>
+                        Çünkü bizim hikâyemiz henüz bitmedi.
+                    </p>
+
+                </div>
+
+            </div>
+
+
         </div>
 
-        <div class="song-artist" id="songArtist">
-            Kenan Doğulu
+    </section>
+
+
+
+    <!-- BUGÜNÜN ŞARKISI -->
+
+    <section class="section music-section">
+
+        <p class="section-label">
+            BUGÜNÜN ŞARKISI
+        </p>
+
+
+        <h2>
+            Bugün seni anlatan<br>
+            şarkı bu.
+        </h2>
+
+
+        <p class="section-text">
+
+            Bazı şarkılar sadece şarkı değildir.
+            Bir insanı, bir anı veya bir hissi hatırlatır.
+
+        </p>
+
+
+        <div class="spotify-song-info">
+
+            <h3 id="dailySongTitle">
+                Güle Güle
+            </h3>
+
+
+            <p id="dailySongArtist">
+                Kenan Doğulu
+            </p>
+
         </div>
 
-        <iframe
-            id="spotifyPlayer"
-            src=""
-            height="152"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy">
-        </iframe>
 
-    </div>
-</section>
+        <div class="spotify-card">
 
-<section id="counter">
-    <div class="section-number">04</div>
-    <h2>BİRLİKTE GEÇEN ZAMAN</h2>
+            <iframe
+                id="dailySpotify"
+                src="https://open.spotify.com/embed/track/6zq2ip8cCibUMG6cmvQgwc?utm_source=generator"
+                width="100%"
+                height="152"
+                frameborder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy">
+            </iframe>
 
-    <div class="counter-box">
-        <div class="counter-number" id="daysTogether">
+        </div>
+
+    </section>
+
+
+
+    <!-- SAYAÇ -->
+
+    <section class="love-counter">
+
+        <p>
+            01.04.2026'dan beri
+        </p>
+
+        <div id="daysTogether">
             0
         </div>
 
-        <div class="counter-label">
-            01.04.2026'dan beri
-        </div>
-    </div>
-</section>
+        <span>
+            GÜN ❤️
+        </span>
 
-<section id="notes">
-    <div class="section-number">05</div>
-    <h2>BUGÜN</h2>
+    </section>
 
-    <div class="notes-box">
 
-        <textarea
-            id="noteInput"
-            placeholder="Buraya bir şeyler yaz..."></textarea>
+    <script>
+    (function () {
+
+        const counter =
+            document.getElementById("daysTogether");
+
+        if (!counter) {
+            return;
+        }
+
+        const startDate =
+            new Date(2026, 3, 1);
+
+        const today =
+            new Date();
+
+        startDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+
+        const difference =
+            today.getTime() - startDate.getTime();
+
+        const days =
+            Math.max(
+                Math.floor(difference / 86400000),
+                0
+            );
+
+        counter.textContent = days;
+
+    })();
+    </script>
+
+
+
+    <!-- BİLDİRİMLER -->
+
+    <section class="section notification-section">
+
+        <p class="section-label">
+            BİLDİRİMLER
+        </p>
+
+
+        <h2>
+            Sana küçük<br>
+            bir sürprizim var.
+        </h2>
+
+
+        <p class="section-text">
+
+            Yeni bir not veya şarkı geldiğinde
+            telefonuna haber verebilirim. ❤️
+
+        </p>
+
 
         <button
-            id="addNoteButton"
+            id="enableNotifications"
             class="note-button"
-            type="button">
-            Not Bırak ❤️
+            type="button"
+        >
+            🔔 Bildirimleri Aç
         </button>
 
+
+        <p
+            id="notificationStatus"
+            style="
+                margin-top:15px;
+                font-size:12px;
+                opacity:0.5;
+            "
+        >
+        </p>
+
+    </section>
+
+
+
+    <!-- NOTLAR -->
+
+    <section class="section notes-section">
+
+        <p class="section-label">
+            BİRBİRİMİZE NOTLAR
+        </p>
+
+
+        <h2>
+            Sana bırakılmış<br>
+            küçük bir not.
+        </h2>
+
+
         <div
-            id="noteStatus"
-            class="status">
+            id="noteForm"
+            class="note-form"
+        >
+
+            <textarea
+                id="noteInput"
+                placeholder="Buraya bir şeyler yaz..."
+            ></textarea>
+
+
+            <div class="note-actions">
+
+                <button
+                    id="addNoteButton"
+                    class="note-button"
+                    type="button"
+                >
+                    Not Bırak ❤️
+                </button>
+
+            </div>
+
         </div>
+
 
         <div
             id="notesList"
-            class="notes-list">
+            class="notes-list"
+        >
         </div>
 
-    </div>
-</section>
+    </section>
 
-<section id="letter">
-    <div class="section-number">06</div>
-    <h2>SANA</h2>
 
-    <div class="letter">
 
-        <p>
-            Canım sevgilim,
-        </p>
+    <!-- MEKTUP -->
 
-        <p>
-            Her günün şükür sebebisin.
-            O güzel ela gözlerin benim en güzel varlığım.
-            Hep yanımda ol.
-        </p>
+    <section class="letter-section">
 
-        <p>
-            Seni çok seviyorum.
-        </p>
+        <div class="letter-card">
 
-        <div class="signature">
-            Mehmet ❤️
+
+            <div class="letter-icon">
+                💌
+            </div>
+
+
+            <p class="section-label">
+                SANA BİR MEKTUP
+            </p>
+
+
+            <h2>
+                Sana söylemek<br>
+                istediğim şeyler var.
+            </h2>
+
+
+            <button
+                id="letterButton"
+                class="letter-button"
+                type="button"
+            >
+                Mektubu Aç ❤️
+            </button>
+
+
+            <div
+                id="letterContent"
+                class="letter-content"
+            >
+
+                <p>
+                    Mina,
+                </p>
+
+
+                <p>
+                    Hayatımdaki en güzel varlıklardan biri
+                    olduğun için çok şanslıyım.
+                </p>
+
+
+                <p>
+                    O güzel ela gözlerin,
+                    gülüşün ve yanımda olduğun her an
+                    benim için çok değerli.
+                </p>
+
+
+                <p>
+                    İyi ki yeniden başladık.
+                    İyi ki hayatımdasın.
+                </p>
+
+
+                <p>
+                    Seni her geçen gün
+                    daha çok seviyorum.
+                </p>
+
+
+                <p class="letter-sign">
+                    Mehmet ❤️
+                </p>
+
+            </div>
+
         </div>
 
-    </div>
-</section>
+    </section>
 
-<footer>
-    Mina ♥ Mehmet
-    <br><br>
-    Sonsuza dek...
-</footer>
+
+
+    <!-- FİNAL -->
+
+    <section class="final-section">
+
+        <p>
+            Ve daha yazılacak<br>
+            çok hikâyemiz var...
+        </p>
+
+
+        <h2>
+            Mina <span>♥</span> Mehmet
+        </h2>
+
+
+        <div class="final-date">
+            01.04.2026 — ∞
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="script.js?v=1000"></script>
+
+
+<!-- SİTE JAVASCRIPT -->
+
+<script src="script.js"></script>
+
+
+<!-- NOT SİSTEMİ -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const button =
+        document.getElementById("addNoteButton");
+
+    const input =
+        document.getElementById("noteInput");
+
+    const list =
+        document.getElementById("notesList");
+
+
+    if (!button || !input || !list) {
+        console.error(
+            "Not sistemi elemanları bulunamadı."
+        );
+        return;
+    }
+
+
+    const NOT_SUPABASE_URL =
+        "https://jqppvpymbfqsjrnaccat.supabase.co";
+
+
+    const NOT_SUPABASE_KEY =
+        "sb_publishable__ve5vd2YY7eksu4zBRPJ2g_XyM8bAzw";
+
+
+    if (!window.supabase) {
+
+        console.error(
+            "Supabase kütüphanesi yüklenmedi."
+        );
+
+        return;
+    }
+
+
+    const notSupabase =
+        window.supabase.createClient(
+            NOT_SUPABASE_URL,
+            NOT_SUPABASE_KEY
+        );
+
+
+    /* =========================
+       NOTLARI GETİR
+    ========================= */
+
+    async function notlariGetir() {
+
+        const result =
+            await notSupabase
+                .from("notes")
+                .select("*")
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
+
+
+        if (result.error) {
+
+            console.error(
+                "NOTLAR ALINAMADI:",
+                result.error
+            );
+
+            return;
+        }
+
+
+        list.innerHTML = "";
+
+
+        (result.data || []).forEach(
+            function (note) {
+
+                const card =
+                    document.createElement("div");
+
+                card.className =
+                    "note-card";
+
+
+                const text =
+                    document.createElement("p");
+
+                text.textContent =
+                    note.text || "";
+
+
+                const date =
+                    document.createElement("div");
+
+                date.className =
+                    "note-date";
+
+
+                if (note.created_at) {
+
+                    date.textContent =
+                        new Date(
+                            note.created_at
+                        ).toLocaleDateString(
+                            "tr-TR"
+                        );
+                }
+
+
+                /* SİL BUTONU */
+
+                const deleteButton =
+                    document.createElement("button");
+
+                deleteButton.type = "button";
+
+                deleteButton.className =
+                    "delete-note";
+
+                deleteButton.textContent =
+                    "Notu Sil";
+
+
+                deleteButton.addEventListener(
+                    "click",
+                    async function () {
+
+                        const onay =
+                            confirm(
+                                "Bu notu silmek istediğine emin misin?"
+                            );
+
+
+                        if (!onay) {
+                            return;
+                        }
+
+
+                        deleteButton.disabled =
+                            true;
+
+                        deleteButton.textContent =
+                            "Siliniyor...";
+
+
+                        const deleteResult =
+                            await notSupabase
+                                .from("notes")
+                                .delete()
+                                .eq(
+                                    "id",
+                                    note.id
+                                );
+
+
+                        if (deleteResult.error) {
+
+                            console.error(
+                                "NOT SİLİNEMEDİ:",
+                                deleteResult.error
+                            );
+
+
+                            alert(
+                                "Not silinemedi:\n" +
+                                deleteResult.error.message
+                            );
+
+
+                            deleteButton.disabled =
+                                false;
+
+                            deleteButton.textContent =
+                                "Notu Sil";
+
+                            return;
+                        }
+
+
+                        await notlariGetir();
+
+                    }
+                );
+
+
+                card.appendChild(text);
+
+                card.appendChild(date);
+
+                card.appendChild(
+                    deleteButton
+                );
+
+                list.appendChild(card);
+
+            }
+        );
+    }
+
+
+
+    /* =========================
+       NOT EKLE
+    ========================= */
+
+    button.addEventListener(
+        "click",
+        async function () {
+
+            const text =
+                input.value.trim();
+
+
+            if (!text) {
+
+                alert(
+                    "Önce bir not yaz ❤️"
+                );
+
+                return;
+            }
+
+
+            button.disabled =
+                true;
+
+            button.textContent =
+                "Ekleniyor...";
+
+
+            const result =
+                await notSupabase
+                    .from("notes")
+                    .insert([
+                        {
+                            text: text
+                        }
+                    ]);
+
+
+            if (result.error) {
+
+                console.error(
+                    "NOT EKLENEMEDİ:",
+                    result.error
+                );
+
+
+                alert(
+                    "Not eklenemedi:\n" +
+                    result.error.message
+                );
+
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    "Not Bırak ❤️";
+
+                return;
+            }
+
+
+            input.value = "";
+
+
+            await notlariGetir();
+
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Not Bırak ❤️";
+
+        }
+    );
+
+
+    /* Sayfa açıldığında notları getir */
+
+    await notlariGetir();
+
+});
+
+</script>
+
 
 </body>
+
 </html>
+```
