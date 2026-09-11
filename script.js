@@ -278,317 +278,322 @@ try {
 
 }
 
-/* =========================
-NOTLAR
-========================= */
+```javascript
+// ===============================
+// NOT SİSTEMİ
+// Herkes yazabilir, okuyabilir ve silebilir
+// ===============================
 
-function setupNotes() {
+const SUPABASE_URL = "https://jqppvpymbfqsjrnaccat.supabase.co";
 
-```
-const addNoteButton =
-    document.getElementById(
-        "addNoteButton"
-    );
+const SUPABASE_ANON_KEY =
+"sb_publishable__ve5vd2YY7eksu4zBRPJ2g_XyM8bAzw";
 
-const noteInput =
-    document.getElementById(
-        "noteInput"
-    );
+const NOTES_API = SUPABASE_URL + "/rest/v1/notes";
 
-const notesList =
-    document.getElementById(
-        "notesList"
-    );
 
-if (
-    !addNoteButton ||
-    !noteInput ||
-    !notesList
-) {
-    return;
-}
-
-addNoteButton.addEventListener(
-    "click",
-    async function () {
-
-        const text =
-            noteInput.value.trim();
-
-        if (!text) {
-
-            alert(
-                "Önce bir not yaz ❤️"
-            );
-
-            return;
-        }
-
-        if (!supabaseClient) {
-
-            alert(
-                "Not sistemi şu anda bağlanamadı."
-            );
-
-            return;
-        }
-
-        addNoteButton.disabled =
-            true;
-
-        addNoteButton.textContent =
-            "Ekleniyor...";
-
-        try {
-
-            const result =
-                await supabaseClient
-                    .from("notes")
-                    .insert([
-                        {
-                            text: text
-                        }
-                    ]);
-
-            if (result.error) {
-
-                console.error(
-                    "NOT EKLENEMEDİ:",
-                    result.error
-                );
-
-                alert(
-                    "Not eklenemedi:\n" +
-                    result.error.message
-                );
-
-                return;
-            }
-
-            noteInput.value =
-                "";
-
-            await loadNotes();
-
-        } catch (error) {
-
-            console.error(
-                "Not ekleme hatası:",
-                error
-            );
-
-            alert(
-                "Not eklenemedi:\n" +
-                error.message
-            );
-
-        } finally {
-
-            addNoteButton.disabled =
-                false;
-
-            addNoteButton.textContent =
-                "Not Bırak ❤️";
-        }
-    }
-);
-
-loadNotes();
-```
-
-}
-
-/* =========================
-NOTLARI GETİR
-========================= */
+// -------------------------------
+// NOTLARI GETİR
+// -------------------------------
 
 async function loadNotes() {
 
-```
-const notesList =
-    document.getElementById(
-        "notesList"
-    );
+    const notesList = document.getElementById("notesList");
 
-if (
-    !notesList ||
-    !supabaseClient
-) {
-    return;
+    if (!notesList) return;
+
+    notesList.innerHTML = "<p>Notlar yükleniyor... ❤️</p>";
+
+    try {
+
+        const response = await fetch(
+            NOTES_API + "?select=*&order=created_at.desc",
+            {
+                method: "GET",
+
+                headers: {
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": "Bearer " + SUPABASE_ANON_KEY
+                }
+            }
+        );
+
+        if (!response.ok) {
+
+            const errorText = await response.text();
+
+            console.error("NOTLAR GETİRİLEMEDİ:", errorText);
+
+            notesList.innerHTML =
+                "<p>Notlar yüklenemedi.</p>";
+
+            return;
+        }
+
+        const notes = await response.json();
+
+        notesList.innerHTML = "";
+
+        if (notes.length === 0) {
+
+            notesList.innerHTML =
+                "<p>Henüz hiç not yok. İlk notu sen bırak ❤️</p>";
+
+            return;
+        }
+
+        notes.forEach(function(note) {
+
+            const noteCard = document.createElement("div");
+
+            noteCard.className = "note-card";
+
+            const date = new Date(note.created_at);
+
+            const formattedDate =
+                date.toLocaleDateString("tr-TR") +
+                " " +
+                date.toLocaleTimeString("tr-TR", {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                });
+
+            noteCard.innerHTML = `
+                <div class="note-text">
+                    ${escapeHtml(note.text)}
+                </div>
+
+                <div class="note-footer">
+
+                    <span class="note-date">
+                        ${formattedDate}
+                    </span>
+
+                    <button
+                        class="delete-note-button"
+                        onclick="deleteNote(${note.id})">
+                        Notu Sil
+                    </button>
+
+                </div>
+            `;
+
+            notesList.appendChild(noteCard);
+
+        });
+
+    } catch (error) {
+
+        console.error("NOTLAR HATASI:", error);
+
+        notesList.innerHTML =
+            "<p>Notlar yüklenirken hata oluştu.</p>";
+    }
 }
 
-try {
 
-    const result =
-        await supabaseClient
-            .from("notes")
-            .select("*")
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
+// -------------------------------
+// NOT EKLE
+// -------------------------------
 
-    if (result.error) {
+async function addNote() {
 
-        console.error(
-            "NOTLAR YÜKLENEMEDİ:",
-            result.error
-        );
+    const noteInput =
+        document.getElementById("noteInput");
+
+    const addNoteButton =
+        document.getElementById("addNoteButton");
+
+    if (!noteInput || !addNoteButton) return;
+
+    const text = noteInput.value.trim();
+
+    if (!text) {
+
+        alert("Önce bir not yaz ❤️");
 
         return;
     }
 
-    const data =
-        result.data || [];
+    addNoteButton.disabled = true;
 
-    notesList.innerHTML =
-        "";
+    addNoteButton.textContent = "Ekleniyor...";
 
-    data.forEach(
-        function (note) {
+    try {
 
-            const card =
-                document.createElement(
-                    "div"
-                );
+        const response = await fetch(
+            NOTES_API,
+            {
+                method: "POST",
 
-            card.className =
-                "note-card";
+                headers: {
 
-            const text =
-                document.createElement(
-                    "p"
-                );
+                    "Content-Type": "application/json",
 
-            text.textContent =
-                note.text || "";
+                    "apikey": SUPABASE_ANON_KEY,
 
-            const date =
-                document.createElement(
-                    "div"
-                );
+                    "Authorization":
+                        "Bearer " + SUPABASE_ANON_KEY,
 
-            date.className =
-                "note-date";
+                    "Prefer": "return=minimal"
+                },
 
-            if (note.created_at) {
-
-                date.textContent =
-                    new Date(
-                        note.created_at
-                    ).toLocaleDateString(
-                        "tr-TR"
-                    );
+                body: JSON.stringify({
+                    text: text
+                })
             }
+        );
 
-            const deleteButton =
-                document.createElement(
-                    "button"
-                );
+        if (!response.ok) {
 
-            deleteButton.type =
-                "button";
+            const errorText =
+                await response.text();
 
-            deleteButton.className =
-                "delete-note";
-
-            deleteButton.textContent =
-                "Notu Sil";
-
-            deleteButton.addEventListener(
-                "click",
-                function () {
-
-                    deleteNote(
-                        note.id
-                    );
-                }
+            console.error(
+                "NOT EKLENEMEDİ:",
+                errorText
             );
 
-            card.appendChild(
-                text
+            alert(
+                "Not eklenemedi.\n\n" +
+                errorText
             );
 
-            card.appendChild(
-                date
-            );
-
-            card.appendChild(
-                deleteButton
-            );
-
-            notesList.appendChild(
-                card
-            );
+            return;
         }
-    );
 
-} catch (error) {
+        noteInput.value = "";
 
-    console.error(
-        "Not yükleme hatası:",
-        error
-    );
+        await loadNotes();
+
+    } catch (error) {
+
+        console.error(
+            "NOT EKLEME HATASI:",
+            error
+        );
+
+        alert(
+            "Not eklenirken bağlantı hatası oluştu."
+        );
+
+    } finally {
+
+        addNoteButton.disabled = false;
+
+        addNoteButton.textContent =
+            "Not Bırak ❤️";
+    }
 }
-```
 
-}
 
-/* =========================
-NOT SİL
-========================= */
+// -------------------------------
+// NOT SİL
+// -------------------------------
 
 async function deleteNote(id) {
 
-```
-if (!supabaseClient) {
-    return;
-}
-
-const confirmed =
-    confirm(
-        "Bu notu silmek istediğine emin misin?"
-    );
-
-if (!confirmed) {
-    return;
-}
-
-try {
-
-    const result =
-        await supabaseClient
-            .from("notes")
-            .delete()
-            .eq(
-                "id",
-                id
-            );
-
-    if (result.error) {
-
-        alert(
-            "Not silinemedi:\n" +
-            result.error.message
+    const confirmed =
+        confirm(
+            "Bu notu silmek istediğine emin misin?"
         );
 
-        return;
+    if (!confirmed) return;
+
+    try {
+
+        const response = await fetch(
+            NOTES_API + "?id=eq." + id,
+            {
+                method: "DELETE",
+
+                headers: {
+
+                    "apikey": SUPABASE_ANON_KEY,
+
+                    "Authorization":
+                        "Bearer " + SUPABASE_ANON_KEY,
+
+                    "Prefer": "return=minimal"
+                }
+            }
+        );
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+            console.error(
+                "NOT SİLİNEMEDİ:",
+                errorText
+            );
+
+            alert(
+                "Not silinemedi.\n\n" +
+                errorText
+            );
+
+            return;
+        }
+
+        await loadNotes();
+
+    } catch (error) {
+
+        console.error(
+            "NOT SİLME HATASI:",
+            error
+        );
+
+        alert(
+            "Not silinirken bağlantı hatası oluştu."
+        );
     }
+}
 
-    await loadNotes();
 
-} catch (error) {
+// -------------------------------
+// GÜVENLİ METİN
+// -------------------------------
 
-    console.error(
-        "Not silme hatası:",
-        error
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+}
+
+
+// -------------------------------
+// BUTON
+// -------------------------------
+
+function setupNotes() {
+
+    const addNoteButton =
+        document.getElementById("addNoteButton");
+
+    if (!addNoteButton) return;
+
+    addNoteButton.addEventListener(
+        "click",
+        addNote
     );
-}
-```
 
+    loadNotes();
 }
+
+
+// -------------------------------
+// BAŞLAT
+// -------------------------------
+
+setupNotes();
+```
 
 /* ==================================================
 iPHONE WEB PUSH
