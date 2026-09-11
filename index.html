@@ -928,7 +928,58 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+    const passwordScreen =
+        document.getElementById("passwordScreen");
+
+    const passwordInput =
+        document.getElementById("sitePassword");
+
+    const passwordButton =
+        document.getElementById("passwordButton");
+
+    const passwordError =
+        document.getElementById("passwordError");
+
+    const correctPassword =
+        "071005";
+
+    function checkPassword() {
+
+        if (passwordInput.value === correctPassword) {
+
+            passwordScreen.style.display = "none";
+
+        } else {
+
+            passwordError.style.display = "block";
+
+            passwordInput.value = "";
+
+            passwordInput.focus();
+        }
+    }
+
+    passwordButton.addEventListener(
+        "click",
+        checkPassword
+    );
+
+    passwordInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+
+        }
+    );
+
+});
+</script>
 </body>
 
 </html>
