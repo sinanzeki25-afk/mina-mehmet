@@ -44,7 +44,96 @@
 
 
 <body>
+<div id="passwordScreen" style="
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #08080b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+">
 
+    <div style="
+        width: 100%;
+        max-width: 360px;
+        text-align: center;
+    ">
+
+        <div style="
+            font-size: 40px;
+            margin-bottom: 20px;
+        ">
+            ❤️
+        </div>
+
+        <h2 style="
+            color: #f5f0eb;
+            margin-bottom: 10px;
+        ">
+            Bize özel
+        </h2>
+
+        <p style="
+            color: #f5f0eb;
+            opacity: 0.6;
+            margin-bottom: 25px;
+        ">
+            Devam etmek için parolayı gir.
+        </p>
+
+        <input
+            id="sitePassword"
+            type="password"
+            placeholder="Parola"
+            style="
+                width: 100%;
+                box-sizing: border-box;
+                padding: 15px;
+                border-radius: 10px;
+                border: 1px solid rgba(255,255,255,0.15);
+                background: rgba(255,255,255,0.05);
+                color: white;
+                text-align: center;
+                font-size: 16px;
+                outline: none;
+            "
+        >
+
+        <button
+            id="passwordButton"
+            type="button"
+            style="
+                width: 100%;
+                margin-top: 12px;
+                padding: 15px;
+                border: none;
+                border-radius: 10px;
+                background: white;
+                color: #08080b;
+                font-size: 15px;
+                cursor: pointer;
+            "
+        >
+            Giriş Yap ❤️
+        </button>
+
+        <p
+            id="passwordError"
+            style="
+                color: #ff8a8a;
+                font-size: 13px;
+                margin-top: 15px;
+                display: none;
+            "
+        >
+            Parola yanlış.
+        </p>
+
+    </div>
+
+</div>
 
 <header class="hero">
 
