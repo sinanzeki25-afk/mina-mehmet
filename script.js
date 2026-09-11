@@ -6,11 +6,7 @@ console.log("SCRIPT.JS ÇALIŞIYOR ❤️");
 ================================================== */
 
 const dailySongs = [
-    {
-        title: "Aşk Laftan Anlamazki",
-        artist: "Yıldız Tilbe",
-        id: "6ISpHcsG1LZMI2EyvzgW5P"
-    },
+   
     {
         title: "Şivesi Sensin Aşkın",
         artist: "Yıldız Tilbe",
